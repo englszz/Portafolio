@@ -1,0 +1,89 @@
+---
+import Heading from '@/components/Heading.astro';
+import { Card, CardContent, CardHeader, CardTitle } from '@/components/ui/card';
+import { Mail, Linkedin, Github } from 'lucide-react'; // Importamos los íconos
+import { cn } from '@/lib/utils';
+
+// --- TUS DATOS DE CONTACTO ---
+const CONTACT_EMAIL = 'engelsdamiron9@gmail.com'; 
+const LINKEDIN_URL = 'https://www.linkedin.com/in/engelsdamiron';
+const GITHUB_URL = 'https://github.com/englszz';
+
+interface Props {
+  mainHeadingTitle: string; 
+  mainHeadingDescription: string; 
+}
+
+const {
+  mainHeadingTitle,
+  mainHeadingDescription,
+} = Astro.props;
+---
+
+<section id="contact" class="py-12 md:py-16">
+  <Heading
+    title={mainHeadingTitle}
+    description={mainHeadingDescription}
+    showDivider={true}
+    className="flex flex-col items-center justify-center"
+    titleClassName="md:text-5xl"
+  />
+
+  <div class="flex justify-center mt-12">
+    <div class="w-full max-w-lg">
+
+      {/* 🎯 TARJETA DE CONTACTO SIMPLE */}
+      <Card class="p-6 md:p-8 space-y-6">
+        <CardHeader class="p-0">
+          <CardTitle class="text-center text-3xl font-bold">
+            <center>Contacto profesional:</center> 
+          </CardTitle>
+        </CardHeader>
+
+        <CardContent class="p-0 space-y-4">
+
+          {/* Enlace de Email */}
+          <div class="flex items-center space-x-3">
+            <Mail class="size-6 text-primary flex-shrink-0" />
+            <a 
+              href={`https://mail.google.com/mail/u/0/?view=cm&fs=1&to=${CONTACT_EMAIL}`}
+              target="_blank"
+              rel="noopener noreferrer"
+              class="text-base font-medium text-foreground hover:text-primary transition-colors truncate"
+            >
+              Gmail: {CONTACT_EMAIL}
+            </a>
+          </div>
+          
+          {/* Enlace de LinkedIn */}
+          <div class="flex items-center space-x-3">
+            <Linkedin class="size-6 text-primary flex-shrink-0" />
+            <a 
+              href={LINKEDIN_URL} 
+              target="_blank" 
+              rel="noopener noreferrer"
+              class="text-base font-medium text-foreground hover:text-primary transition-colors truncate"
+            >
+              LinkedIn: engelsdamiron
+            </a>
+          </div>
+
+          {/* Enlace de GitHub */}
+          <div class="flex items-center space-x-3">
+            <Github class="size-6 text-primary flex-shrink-0" />
+            <a 
+              href={GITHUB_URL} 
+              target="_blank" 
+              rel="noopener noreferrer"
+              class="text-base font-medium text-foreground hover:text-primary transition-colors truncate"
+            >
+              GitHub: englszz
+            </a>
+          </div>
+
+        </CardContent>
+      </Card>
+
+    </div>
+  </div>
+</section>

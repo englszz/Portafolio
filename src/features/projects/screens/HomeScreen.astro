@@ -1,0 +1,332 @@
+---
+import Heading from '@/components/Heading.astro';
+import SkillCard from '@/components/SkillCard.astro';
+import { buttonVariants } from '@/components/ui/button';
+import type { LanguageCode } from '@/i18n/ui';
+import { getRelativeLocaleUrl } from 'astro:i18n';
+import { MessageSquare, Briefcase, GraduationCap, Wrench, Users, Github, Linkedin, FileText } from 'lucide-react';
+
+import heroImage from '@/assets/fotos/DamirónPFP.png';
+import { Image } from 'astro:assets';
+import FeaturedProjectPreview from '../components/FeaturedProjectPreview.astro';
+import type { TranslatedProject, TranslatedSkill } from '../type';
+
+export type Props = {
+  lang: LanguageCode;
+  projects: Array<TranslatedProject>;
+  skills: Array<TranslatedSkill>;
+  heroGreeting: string;
+  heroSubtitlePart1: string;
+  heroSubtitlePart2: string;
+  heroSubtitlePart3: string;
+  heroIntroduction: string;
+  heroViewWorkButton: string;
+  heroContactButton: string;
+  imageNotAvailable: string;
+  featuredProjectsTitle: string;
+  featuredProjectsDescription: string;
+  mySkillsTitle: string;
+  mySkillsDescription: string;
+  projectPreviewCtaText: string;
+};
+
+const {
+  lang,
+  projects,
+  skills,
+  heroGreeting,
+  heroSubtitlePart1,
+  heroSubtitlePart2,
+  heroSubtitlePart3,
+  heroIntroduction,
+  heroViewWorkButton,
+  heroContactButton,
+  imageNotAvailable,
+  featuredProjectsTitle,
+  featuredProjectsDescription,
+  mySkillsTitle,
+  mySkillsDescription,
+  projectPreviewCtaText,
+} = Astro.props;
+
+---
+
+{/* ─── HERO ─── */}
+<section class="py-12 md:py-16">
+  <div class="grid md:grid-cols-2 gap-12 items-center justify-between">
+    {/* Hero Text Column */}
+    <div class="text-center md:text-left">
+      <div class="inline-flex items-center gap-2 px-3 py-1.5 rounded-full bg-primary/10 text-primary text-sm font-medium mb-5 border border-primary/20">
+        <span class="relative flex h-2 w-2">
+          <span class="animate-ping absolute inline-flex h-full w-full rounded-full bg-primary opacity-75"></span>
+          <span class="relative inline-flex rounded-full h-2 w-2 bg-primary"></span>
+        </span>
+        Abierto a nuevos proyectos
+      </div>
+
+      <h1 class="text-4xl md:text-5xl lg:text-6xl font-bold tracking-tight mb-4">
+        {heroGreeting}
+      </h1>
+
+      <p class="text-xl md:text-2xl font-medium text-muted-foreground mb-6">
+        <span class="text-primary">{heroSubtitlePart1}</span> | <span class="text-primary">{heroSubtitlePart2}</span> | <span class="text-primary">{heroSubtitlePart3}</span>
+      </p>
+
+      <p class="text-base md:text-lg text-muted-foreground mb-8 max-w-xl mx-auto md:mx-0">
+        {heroIntroduction}
+      </p>
+
+     {/* CTA Buttons */}
+<div class="flex flex-col sm:flex-row gap-3 justify-center md:justify-start mb-8">
+  {/* Botón: Ver proyectos */}
+  <a
+    href={getRelativeLocaleUrl(lang, "/projects")}
+    class={buttonVariants({ variant: 'default', size: 'lg' })}
+  >
+    <Briefcase className="mr-2 size-4" />
+    {heroViewWorkButton}
+  </a>
+
+  {/* Botón: Contacto */}
+  <a
+    href={getRelativeLocaleUrl(lang, "/contact")}
+    class={buttonVariants({ variant: 'outline', size: 'lg' })}
+  >
+    <MessageSquare className="mr-2 size-4" />
+    {heroContactButton}
+  </a>
+
+  {/* Botón: Formación */}
+  <a
+  href="#skills"
+  class={buttonVariants({ variant: 'outline', size: 'lg' })}
+>
+  <GraduationCap className="mr-2 size-4" />
+  Formación
+</a>
+</div>
+
+
+
+      {/* Social Links */}
+      <div class="flex items-center gap-4 justify-center md:justify-start">
+        <a
+          href="https://github.com/englszz"
+          target="_blank"
+          rel="noopener noreferrer"
+          aria-label="GitHub de Engels Damirón"
+          class="flex items-center gap-2 text-sm text-muted-foreground hover:text-foreground transition-colors group"
+        >
+          <Github className="size-5 group-hover:text-primary transition-colors" />
+          <span class="hidden sm:inline">GitHub</span>
+        </a>
+        <span class="text-muted-foreground/30">•</span>
+        <a
+          href="https://www.linkedin.com/in/engelsdamiron/?locale=en"
+          target="_blank"
+          rel="noopener noreferrer"
+          aria-label="LinkedIn de Engels Damirón"
+          class="flex items-center gap-2 text-sm text-muted-foreground hover:text-foreground transition-colors group"
+        >
+          <Linkedin className="size-5 group-hover:text-primary transition-colors" />
+          <span class="hidden sm:inline">LinkedIn</span>
+        </a>
+        <span class="text-muted-foreground/30">•</span>
+        <a
+          href="/CV-Engels.pdf"
+          target="_blank"
+          rel="noopener noreferrer"
+          aria-label="Descargar CV de Engels Damirón"
+          class="flex items-center gap-2 text-sm text-muted-foreground hover:text-foreground transition-colors group"
+        >
+          <FileText className="size-5 group-hover:text-primary transition-colors" />
+          <span class="hidden sm:inline">Descargar CV</span>
+        </a>
+      </div>
+    </div>
+
+    {/* Hero Image */}
+    <div class="md:text-center">
+      <div
+        class="md:w-[600px] w-full h-92 bg-muted rounded-lg shadow-xl overflow-hidden mx-auto"
+      >
+        <Image
+          src={heroImage}
+          alt={'Foto de perfil de Engels Damirón'}
+          width={600}
+          height={368}
+          densities={[1, 1.5, 2]}
+          quality="high"
+          class="h-full w-full object-cover"
+          style="object-position: center 28%;"
+        />
+      </div>
+    </div>
+  </div>
+</section>
+
+{/* ─── SOBRE MÍ ─── */}
+<section id="about" class="py-14 md:py-20 border-t border-border/50">
+  <div class="grid md:grid-cols-5 gap-10 items-start">
+    <div class="md:col-span-2">
+      <span class="text-primary font-semibold text-sm uppercase tracking-widest block mb-2">¿Quién soy?</span>
+      <h2 class="text-3xl md:text-4xl font-bold mb-4">Sobre mí</h2>
+      <p class="text-muted-foreground text-sm">Estudiante, técnico y creador digital en República Dominicana.</p>
+    </div>
+    <div class="md:col-span-3 space-y-4 text-muted-foreground leading-relaxed">
+      <p>
+        Soy <strong class="text-foreground">Engels Smith Damirón</strong>, técnico en soporte IT y estudiante de <strong class="text-foreground">Ingeniería en Ciberseguridad</strong> en la Universidad del Caribe (UNICARIBE). Combino mi formación académica con experiencia real en entornos laborales, como el <strong class="text-foreground">Programa de Verano FUNDAPEC</strong>, donde colaboré en el departamento de TIC.
+      </p>
+      <p>
+        Me especializo en <strong class="text-foreground">desarrollo web front-end</strong>, diseño de identidad visual y análisis de sistemas. Tengo experiencia con HTML, CSS, JavaScript, TypeScript, Astro y React, y disfruto construir proyectos que resuelvan problemas reales.
+      </p>
+      <p>
+        También soy fundador y gestor de mi agencia de diseño web <strong class="text-foreground">EDP.web</strong>, enfocada en pequeñas y medianas empresas. Me encargo del <strong class="text-foreground">desarrollo de sitios web modernos</strong>, la gestión de relaciones con clientes y la ejecución de estrategias digitales, con el objetivo de incrementar la presencia digital de empresas en crecimiento.
+      </p>
+    </div>
+  </div>
+</section>
+
+{/* ─── PROYECTOS DESTACADOS ─── */}
+<section id="projects" class="py-14 md:py-20 border-t border-border/50 bg-muted/20 dark:bg-muted/10">
+  <Heading
+    title={featuredProjectsTitle}
+    description={featuredProjectsDescription}
+    className="flex flex-col items-center"
+  />
+
+  <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8">
+    {
+      projects.slice(0, 3).map((project: TranslatedProject) => {
+        return (
+          <FeaturedProjectPreview
+            lang={lang}
+            slug={project.slug}
+            title={project.title}
+            description={project.description}
+            imageUrl={project.imageUrl}
+            imageAltText={project.imageAltText}
+            ctaText={projectPreviewCtaText}
+            technologiesUsed={[]}
+          />
+        );
+      })
+    }
+  </div>
+
+  <div class="mt-10 text-center">
+    <a
+      href={getRelativeLocaleUrl(lang, '/projects')}
+      class={buttonVariants({ variant: 'outline', size: 'lg' })}
+    >
+      Ver todos los proyectos →
+    </a>
+  </div>
+</section>
+
+{/* ─── HABILIDADES Y PERFIL ─── */}
+<section id="skills" class="py-14 md:py-20 border-t border-border/50">
+  <div class="mb-12 text-center">
+    <span class="text-primary font-semibold text-sm uppercase tracking-widest block mb-2">Mi perfil</span>
+    <h2 class="text-3xl md:text-4xl font-bold mb-3">{mySkillsTitle}</h2>
+    <p class="text-muted-foreground max-w-xl mx-auto">{mySkillsDescription}</p>
+  </div>
+
+{/* Educación */}
+<div class="mb-10">
+  <div class="flex items-center gap-3 mb-5">
+    <div class="p-2 rounded-lg bg-primary/10"><GraduationCap className="size-5 text-primary" client:load /></div>
+    <h3 class="text-xl font-semibold">Educación</h3>
+  </div>
+  <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-4">
+    <div class="border border-border rounded-xl p-5 hover:border-primary/40 transition-colors bg-card">
+      <p class="font-semibold text-foreground">Estudiante de Ingeniería en Ciberseguridad</p>
+      <p class="text-sm text-muted-foreground mt-1">Universidad del Caribe (UNICARIBE) · 2026 – actualidad</p>
+    </div>
+    <div class="border border-border rounded-xl p-5 hover:border-primary/40 transition-colors bg-card">
+      <p class="font-semibold text-foreground">Bachiller técnico en Desarrollo de Aplicaciones</p>
+      <p class="text-sm text-muted-foreground mt-1">Politécnico Parroquial Betania · 2022 – 2025</p>
+    </div>
+    <div class="border border-border rounded-xl p-5 hover:border-primary/40 transition-colors bg-card">
+      <p class="font-semibold text-foreground">Inglés intermedio</p>
+      <p class="text-sm text-muted-foreground mt-1">O&M · En curso · Enfoque en pronunciación</p>
+    </div>
+  </div>
+</div>
+
+{/* Experiencia */}
+<div class="mb-10">
+  <div class="flex items-center gap-3 mb-5">
+    <div class="p-2 rounded-lg bg-primary/10"><Briefcase className="size-5 text-primary" client:load /></div>
+    <h3 class="text-xl font-semibold">Experiencia laboral</h3>
+  </div>
+
+  <div class="space-y-4">
+    <div class="border border-border rounded-xl p-5 hover:border-primary/40 transition-colors bg-card space-y-3">
+      <p class="font-semibold text-foreground text-lg">Práctica de verano – FUNDAPEC</p>
+      <p class="text-sm text-muted-foreground font-medium">2022 – 2024</p>
+      <p class="text-sm text-muted-foreground leading-relaxed">
+        Participación en diferentes áreas de la institución, incluyendo Tecnologías de la Información, archivo y servicios generales. Apoyo en la organización de documentos, actualización de información en sistemas, asistencia administrativa y soporte en tareas tecnológicas básicas.
+      </p>
+    </div>
+
+    <div class="border border-border rounded-xl p-5 hover:border-primary/40 transition-colors bg-card space-y-3">
+      <p class="font-semibold text-foreground text-lg">Community Manager y soporte web – AJDent</p>
+      <p class="text-sm text-muted-foreground font-medium">2026 – actualidad</p>
+      <p class="text-sm text-muted-foreground leading-relaxed">
+        Gestión de redes sociales y apoyo en la presencia digital de la clínica. Manejo de la comunicación con clientes, publicación de contenido y soporte en la información del sitio web para mejorar la visibilidad del negocio.
+      </p>
+    </div>
+
+    <div class="border border-border rounded-xl p-5 hover:border-primary/40 transition-colors bg-card space-y-3">
+      <p class="font-semibold text-foreground text-lg">Pasantía – Soporte administrativo y servicios generales</p>
+      <p class="text-sm text-muted-foreground font-medium">2024 – 2025</p>
+      <p class="text-sm text-muted-foreground leading-relaxed">
+        Apoyo en tareas administrativas como la organización y traslado de documentos, grabación de discos, actualización de información en el sistema institucional y asistencia en procesos internos.
+      </p>
+    </div>
+
+    <div class="border border-border rounded-xl p-5 hover:border-primary/40 transition-colors bg-card space-y-3">
+      <p class="font-semibold text-foreground text-lg">EDP.web – Proyecto empresarial</p>
+      <p class="text-sm text-muted-foreground font-medium">2025 – actualidad</p>
+      <p class="text-sm text-muted-foreground leading-relaxed">
+        Fundación y gestión de una agencia de diseño web enfocada en pequeñas y medianas empresas. Desarrollo de sitios web modernos, gestión de clientes y ejecución de estrategias digitales.
+      </p>
+    </div>
+  </div>
+</div>
+
+{/* Habilidades técnicas */}
+<div class="mb-10">
+  <div class="flex items-center gap-3 mb-5">
+    <div class="p-2 rounded-lg bg-primary/10"><Wrench className="size-5 text-primary" client:load /></div>
+    <h3 class="text-xl font-semibold">Habilidades técnicas</h3>
+  </div>
+  <div class="grid md:grid-cols-2 lg:grid-cols-3 gap-4">
+    {
+      skills.map((skill) => (
+        <SkillCard
+          title={skill.title}
+          description={skill.description}
+          iconName={skill.iconName}
+          technologies={skill.technologies}
+        />
+      ))
+    }
+  </div>
+</div>
+
+{/* Habilidades profesionales */}
+<div>
+  <div class="flex items-center gap-3 mb-5">
+    <div class="p-2 rounded-lg bg-primary/10"><Users className="size-5 text-primary" client:load /></div>
+    <h3 class="text-xl font-semibold">Habilidades profesionales</h3>
+  </div>
+  <div class="grid grid-cols-2 md:grid-cols-4 gap-3">
+    {['Liderazgo', 'Comunicación', 'Trabajo en equipo', 'Resolución de problemas', 'Adaptabilidad', 'Organización', 'Pensamiento crítico', 'Proactividad'].map((soft) => (
+      <div class="border border-border rounded-lg px-4 py-3 text-sm text-center font-medium hover:border-primary/40 hover:text-primary transition-colors">
+        {soft}
+      </div>
+    ))}
+  </div>
+</div>

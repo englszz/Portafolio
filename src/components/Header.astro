@@ -1,0 +1,66 @@
+---
+import { defaultLanguage, type LanguageCode } from '@/i18n/ui';
+import type { NavItem } from '@/layouts/BaseLayout.astro';
+// âŒ ELIMINAMOS ESTAS IMPORTACIONES, ya no se usan al quitar el selector de idioma:
+// import { type LanguageSelectorItem } from '@/lib/i18n-utils';
+// import { LanguageSelector } from './LanguageSelector.tsx';
+import { getRelativeLocaleUrl } from 'astro:i18n';
+import ThemeToggle from './ThemeToggle.astro';
+
+// ðŸš€ IMPORTAMOS LO NECESARIO PARA LA IMAGEN
+import { Image } from 'astro:assets';
+import EdLogo from '@/assets/fotos/ed.png'; 
+
+interface Props {
+   // âŒ ELIMINAMOS ESTA PROPIEDAD:
+   // languagesForSelector: Array<LanguageSelectorItem>;
+   navItems: Array<NavItem>;
+}
+// Ajustamos la destructuraciÃ³n de props
+const { navItems } = Astro.props as Props;
+
+const currentLocale =
+   (Astro.currentLocale as LanguageCode | undefined) ?? defaultLanguage;
+---
+
+<header
+   class="py-6 border-b sticky top-0 z-50 w-full bg-background/95 backdrop-blur supports-[backdrop-filter]:bg-background/60"
+>
+   <nav class="mx-auto px-4 max-w-screen-2xl flex justify-between items-center">
+      {/* âœ… CORRECCIÃ“N CLAVE: El logo ahora usa getRelativeLocaleUrl para apuntar siempre
+         a la raÃz (/) con el prefijo de idioma 'en'. */}
+      <a 
+         href={getRelativeLocaleUrl(currentLocale, '/')} 
+         class="flex items-center space-x-2 text-2xl font-bold"
+      >
+            <Image  
+                  src={EdLogo}  
+                  alt="Logo de Engels DamirÃ³n"  
+                  width={40}    
+                  height={40}  
+            />
+      </a>
+      <div class="flex items-center gap-x-5">
+         {
+            navItems.map((link) => (
+               <a
+                  href={getRelativeLocaleUrl(currentLocale, link.href)}
+                  class="font-medium text-muted-foreground transition-colors hover:text-foreground relative group"
+               >
+                  {link.label}
+                  <span class="absolute -bottom-1 left-0 w-0 h-0.5 bg-primary transition-all duration-300 group-hover:w-full" />
+               </a>
+            ))
+         }
+      </div>
+      <div class="flex items-center gap-x-3">
+         {/* âŒ ELIMINAMOS EL SELECTOR DE IDIOMA */}
+         {/* <LanguageSelector
+            currentLocale={currentLocale}
+            languages={languagesForSelector}
+            client:load
+         /> */}
+         
+      </div>
+   </nav>
+</header>

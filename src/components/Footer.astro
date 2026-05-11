@@ -1,0 +1,85 @@
+---
+import { defaultLanguage, useTranslations, type LanguageCode } from '@/i18n/ui';
+import { getRelativeLocaleUrl } from 'astro:i18n';
+import { Github, Linkedin, Mail, FileText, ArrowUpRight } from 'lucide-react';
+
+const lang =
+  (Astro.currentLocale as LanguageCode | undefined) ?? defaultLanguage;
+const tSite = useTranslations(lang, 'site');
+const tNav = useTranslations(lang, 'nav');
+---
+
+<footer class="border-t border-border/60 bg-muted/20 mt-auto">
+  <div class="container mx-auto px-4 max-w-screen-2xl py-12">
+    <div class="grid md:grid-cols-3 gap-10">
+
+      {/* Brand Column */}
+      <div>
+        <p class="text-lg font-bold mb-2">Engels Damirón</p>
+        <p class="text-sm text-muted-foreground mb-4 max-w-xs">
+          Técnico en soporte IT, desarrollador web y futuro ingeniero en ciberseguridad desde República Dominicana.
+        </p>
+        <a
+          href="https://mail.google.com/mail/u/0/?view=cm&fs=1&to=${CONTACT_EMAIL}"
+          class="inline-flex items-center gap-2 text-sm text-muted-foreground hover:text-primary transition-colors"
+        >
+          <Mail class="size-4" />
+          engelsdamiron@gmail.com
+        </a>
+      </div>
+
+      {/* Navigation Column */}
+      <div>
+        <p class="text-sm font-semibold uppercase tracking-widest text-muted-foreground mb-4">Navegación</p>
+        <nav class="flex flex-col gap-2">
+          <a href={getRelativeLocaleUrl(lang, '/')} class="text-sm text-muted-foreground hover:text-foreground transition-colors">{tNav('home')}</a>
+          <a href={getRelativeLocaleUrl(lang, '/projects')} class="text-sm text-muted-foreground hover:text-foreground transition-colors">{tNav('projects')}</a>
+          <a href={getRelativeLocaleUrl(lang, '/blog')} class="text-sm text-muted-foreground hover:text-foreground transition-colors">{tNav('blog')}</a>
+          <a href={getRelativeLocaleUrl(lang, '/contact')} class="text-sm text-muted-foreground hover:text-foreground transition-colors">{tNav('contact')}</a>
+        </nav>
+      </div>
+
+      {/* Social Column */}
+      <div>
+        <p class="text-sm font-semibold uppercase tracking-widest text-muted-foreground mb-4">Encuéntrame en</p>
+        <div class="flex flex-col gap-3">
+          <a
+            href="https://github.com/englszz"
+            target="_blank"
+            rel="noopener noreferrer"
+            class="inline-flex items-center gap-2 text-sm text-muted-foreground hover:text-primary transition-colors group"
+          >
+            <Github class="size-4" />
+            GitHub
+            <ArrowUpRight class="size-3 opacity-0 group-hover:opacity-100 transition-opacity" />
+          </a>
+          <a
+            href="https://www.linkedin.com/in/engelsdamiron/?locale=en"
+            target="_blank"
+            rel="noopener noreferrer"
+            class="inline-flex items-center gap-2 text-sm text-muted-foreground hover:text-primary transition-colors group"
+          >
+            <Linkedin class="size-4" />
+            LinkedIn
+            <ArrowUpRight class="size-3 opacity-0 group-hover:opacity-100 transition-opacity" />
+          </a>
+          <a
+            href="/CV-Engels.pdf"
+            target="_blank"
+            rel="noopener noreferrer"
+            class="inline-flex items-center gap-2 text-sm text-muted-foreground hover:text-primary transition-colors group"
+          >
+            <FileText class="size-4" />
+            Descargar CV
+            <ArrowUpRight class="size-3 opacity-0 group-hover:opacity-100 transition-opacity" />
+          </a>
+        </div>
+      </div>
+    </div>
+
+    {/* Bottom bar */}
+    <div class="mt-10 pt-6 border-t border-border/40 flex items-center justify-center text-xs text-muted-foreground">
+      <p>© 2026 Engels Damirón. Todos los derechos reservados.</p>
+    </div>
+  </div>
+</footer>

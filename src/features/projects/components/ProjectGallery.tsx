@@ -1,3 +1,4 @@
+import { useState } from 'react';
 import { AspectRatio } from '@/components/ui/aspect-ratio';
 import { Card, CardContent } from '@/components/ui/card';
 import {
@@ -7,6 +8,7 @@ import {
   CarouselNext,
   CarouselPrevious,
 } from '@/components/ui/carousel';
+import ImageLightbox from './ImageLightbox';
 
 interface GalleryImage {
   src: string;
@@ -20,37 +22,59 @@ interface ProjectGalleryProps {
 }
 
 export default function ProjectGallery({ images }: ProjectGalleryProps) {
+  const [lightboxOpen, setLightboxOpen] = useState(false);
+  const [lightboxIndex, setLightboxIndex] = useState(0);
+
+  const openLightbox = (index: number) => {
+    setLightboxIndex(index);
+    setLightboxOpen(true);
+  };
+
   return (
-    <Carousel
-      className="w-full md:ml-12"
-      opts={{
-        align: 'start',
-        loop: true,
-      }}
-    >
-      <CarouselContent className="-ml-1 not-prose">
-        {images.map((image, index) => (
-          <CarouselItem key={index} className="pl-1 relative">
-            <div>
-              <Card>
-                <CardContent>
-                  <AspectRatio ratio={16 / 9} className="h-full w-full">
-                    <img
-                      src={image.src}
-                      alt={image.alt}
-                      className="h-full w-full rounded-md object-cover"
-                      width={600}
-                      height={600}
-                    />
-                  </AspectRatio>
-                </CardContent>
-              </Card>
-            </div>
-          </CarouselItem>
-        ))}
-      </CarouselContent>
-      <CarouselPrevious className=" md:left-[-3rem] absolute  left-4 top-1/2 -translate-y-1/2" />
-      <CarouselNext className=" md:right-[-3rem] absolute right-4  top-1/2 -translate-y-1/2" />
-    </Carousel>
+    <>
+      <Carousel
+        className="w-full md:ml-12"
+        opts={{
+          align: 'start',
+          loop: true,
+        }}
+      >
+        <CarouselContent className="-ml-1 not-prose">
+          {images.map((image, index) => (
+            <CarouselItem key={index} className="pl-1 relative">
+              <div>
+                <Card>
+                  <CardContent>
+                    <AspectRatio ratio={16 / 9} className="h-full w-full">
+                      <img
+                        src={image.src}
+                        alt={image.alt}
+                        className="h-full w-full rounded-md object-cover cursor-pointer transition-all duration-300 hover:brightness-90"
+                        width={600}
+                        height={600}
+                        onClick={() => openLightbox(index)}
+                      />
+                    </AspectRatio>
+                  </CardContent>
+                </Card>
+              </div>
+            </CarouselItem>
+          ))}
+        </CarouselContent>
+        <CarouselPrevious className=" md:left-[-3rem] absolute  left-4 top-1/2 -translate-y-1/2" />
+        <CarouselNext className=" md:right-[-3rem] absolute right-4  top-1/2 -translate-y-1/2" />
+      </Carousel>
+
+      <ImageLightbox
+        images={images.map((img) => ({
+          src: img.src,
+          alt: img.alt,
+          caption: img.caption,
+        }))}
+        initialIndex={lightboxIndex}
+        open={lightboxOpen}
+        onOpenChange={setLightboxOpen}
+      />
+    </>
   );
 }

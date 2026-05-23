@@ -47,7 +47,7 @@ const projectsListUnsorted: Array<ProjectData> = [
     projectUrl: 'https://edp-calendar.vercel.app/',
     tags: ['Productividad', 'Freelance', 'Calendario'],
     Categoria: 'Gestión de Proyectos',
-    date: '2026-01-15',
+    date: '2026-22-15',
     galleryImages: [],
     keyFeatures: [
       { id: 'Sistema híbrido personal/negocios' },

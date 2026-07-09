@@ -1,7 +1,6 @@
 ---
 import { useTranslations } from '@/i18n/ui';
 import BaseLayout from '@/layouts/BaseLayout.astro';
-import { Image } from 'astro:assets';
 import type { CollectionEntry } from 'astro:content';
 import { formatDate } from 'date-fns/format';
 
@@ -53,14 +52,13 @@ const { pubDate, updatedDate } = post;
 
     {
       post.heroImage && (
-        <Image
+        <img
           src={post.heroImage.url}
           alt={t('heroImageAlt') + post.title}
           class="w-full h-auto rounded-lg mb-8 shadow-lg"
           width={768}
           height={432}
-          densities={[1, 1.5, 2]}
-          quality="mid"
+          loading="lazy"
         />
       )
     }

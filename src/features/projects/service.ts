@@ -17,11 +17,6 @@ import ajDentExtra1 from '@/assets/proyectos/AJDent2.png';
 import ajDentExtra2 from '@/assets/proyectos/AJDent3.png';
 import ajDentExtra3 from '@/assets/proyectos/AJDent4.png';
 
-// Reviews
-import reviewsMainImage from '@/assets/proyectos/REVEWWHITE.jpg';
-import reviewsExtra1 from '@/assets/proyectos/lilwayne.png';
-import reviewsExtra2 from '@/assets/proyectos/music.png';
-import reviewsExtra3 from '@/assets/proyectos/description.png';
 
 // EDP.web
 import EDPweb from '@/assets/proyectos/edpp.jpg';
@@ -64,30 +59,6 @@ const projectsListUnsorted: Array<ProjectData> = [
     extraImage3: edpExtra3,
   },
 
-  // ✅ PROYECTO 3: REVIEWS (NUEVO - REEMPLAZA A NUTRI MARKET EN LOS TOP 3)
-  {
-    id: 'ЯEVIEW',
-    slug: 'reviews-project',
-    imageUrl: reviewsMainImage,
-    projectUrl: 'https://music-reviews-three.vercel.app/',
-    tags: ['Reviews', 'Música', 'Opinión'],
-    Categoria: 'Plataforma de Reviews',
-    date: '2026-11-10',
-    galleryImages: [],
-    keyFeatures: [
-      { id: 'Reseñas de música' },
-      { id: 'Sistema de calificación' },
-      { id: 'Interfaz moderna' },
-    ],
-    technologiesUsed: [
-      { id: 'react', name: 'React' },
-      { id: 'nodejs', name: 'Node.js' },
-      { id: 'tailwindcss', name: 'TailwindCSS' },
-    ],
-    extraImage1: reviewsExtra1,
-    extraImage2: reviewsExtra2,
-    extraImage3: reviewsExtra3,
-  },
 
   {
     id: 'AJ Dent',
@@ -168,11 +139,6 @@ function translateProject(
     let learnings = 'Learnings information missing.';
 
     switch (project.id) {
-      case 'ЯEVIEW':
-        detailedDescription = 'Reviews es una plataforma diseñada para compartir y descubrir reseñas de música. El proyecto nació de la necesidad de crear un espacio organizado donde los usuarios pudieran expresar sus opiniones sobre álbumes, canciones y artistas. Me encargué del diseño completo de la interfaz y la experiencia de usuario.';
-        challenges = 'El principal desafío fue crear un sistema de calificación intuitivo y una interfaz que permitiera navegar fácilmente entre diferentes categorías musicales. También fue complejo mantener un diseño limpio que no abrumara al usuario con información.';
-        learnings = 'Este proyecto me permitió mejorar mis habilidades en diseño de interfaces interactivas y sistemas de organización de contenido. Aprendí a pensar en la experiencia del usuario desde múltiples perspectivas.';
-        break;
       case 'EDP Calendar':
         detailedDescription = 'EDP Calendar nació de la necesidad de tener una sola herramienta que combinara organización personal y gestión de proyectos freelance. La idea era simple: no depender de tres apps distintas para manejar tareas del día, proyectos de clientes y métricas de productividad.';
         challenges = 'El mayor reto fue el sistema de notificaciones. iOS bloquea las notificaciones push en apps web, lo que obligó a replantear toda la arquitectura y optar por recordatorios vía email con un servidor externo. Configurar Firebase Cloud Functions, manejar permisos de Google Cloud y resolver conflictos de versiones en las dependencias consumió la mayor parte del tiempo de desarrollo.';
@@ -216,7 +182,6 @@ function translateProject(
     const getFallbackShortDescription = (projectId: string) => {
       switch (projectId) {
         case 'EDP.web': return 'Sitio web minimalista e interactivo para una agencia de desarrollo web moderna.';
-        case 'ЯEVIEW': return 'Plataforma web para compartir reseñas y opiniones sobre canciones y álbumes.';
         case 'EDP Calendar': return 'Calendario híbrido para gestión personal y proyectos freelance con recordatorios por email.';
         case 'AJ Dent': return 'Landing page moderna y funcional para una clínica dental con integración de citas.';
         default: return 'Proyecto de diseño y desarrollo web enfocado en la experiencia de usuario.';

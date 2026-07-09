@@ -1,12 +1,11 @@
 import { defineCollection, reference, z } from 'astro:content';
 import { glob } from 'astro/loaders';
-
 const blogCollection = defineCollection({
   loader: glob({
     pattern: '**/*.mdx',
     base: './src/features/blog/content',
   }),
-  schema: ({ image }) =>
+  schema: () =>
     z.object({
       title: z.string(),
       description: z.string().optional(),
@@ -14,7 +13,7 @@ const blogCollection = defineCollection({
       updatedDate: z.coerce.date().optional(),
       heroImage: z
         .object({
-          url: image(),
+          url: z.string(),
           alt: z.string(),
         })
         .optional(),
@@ -25,13 +24,12 @@ const blogCollection = defineCollection({
       lang: z.enum(['fr', 'en']).optional().default('fr'),
     }),
 });
-
 const tipsCollection = defineCollection({
   loader: glob({
     pattern: '**/*.mdx',
     base: './src/features/tips/content',
   }),
-  schema: ({ image }) =>
+  schema: () =>
     z.object({
       title: z.string(),
       description: z.string().optional(),
@@ -41,7 +39,7 @@ const tipsCollection = defineCollection({
       isDraft: z.boolean().default(false),
       heroImage: z
         .object({
-          url: image(),
+          url: z.string(),
           alt: z.string(),
         })
         .optional(),
@@ -51,7 +49,6 @@ const tipsCollection = defineCollection({
       difficulty: z.enum(['beginner', 'intermediate', 'advanced']).optional(),
     }),
 });
-
 export const collections = {
   blog: blogCollection,
   tips: tipsCollection,

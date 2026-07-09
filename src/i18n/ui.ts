@@ -17,7 +17,7 @@ export const ui = {
       },
       backendDevelopment: {
         title: 'Inglés Intermedio',
-        description: 'O&M — Nivel intermedio con enfoque en pronunciación, presentaciones orales y comunicación técnica.',
+        description: 'O&M — Nivel intermedio-alto con enfoque en pronunciación, presentaciones orales y comunicación técnica.',
       },
       uiUxDesign: {
         title: 'Diseño UI/UX & Gráfico',
@@ -80,7 +80,6 @@ export const ui = {
       heroImageAlt: 'Imagen del artículo: ',
       publishedOn: 'Publicado el: ',
       readMore: 'Leer más',
-      readingTimeSuffix: 'min de lectura',
       searchPlaceholder: 'Buscar...',
       noTagFound: 'Categoría no encontrada.',
       selectTagCommandPlaceholder: 'Buscar categoría...',
@@ -92,7 +91,6 @@ export const ui = {
       updatedOn: 'Actualizado el: ',
       heroImageAlt: 'Imagen del artículo: ',
       backToList: 'Volver a trayectoria',
-      readingTimeSuffix: 'min de lectura',
       relatedPostsTitle: 'Seguir leyendo',
       readMore: 'Leer más',
     },

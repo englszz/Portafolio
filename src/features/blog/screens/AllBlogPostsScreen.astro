@@ -61,6 +61,9 @@ const pageDescription = t('pageDescription');
       </a>
     </div>
     <Heading title={t('title')} description={t('description')} />
+    <p class="text-xs text-muted-foreground mt-2 mb-4">
+  Ordenado de más reciente a más antiguo.
+</p>
     <FilteredPostsList
       client:load
       allPosts={posts.map(transformPostForClientFilter)}

@@ -6,7 +6,6 @@ import type { LanguageCode } from '@/i18n/ui';
 import { useTranslations } from '@/i18n/ui';
 import BaseLayout from '@/layouts/BaseLayout.astro';
 import { formatDate } from '@/lib/utils';
-import { Image } from 'astro:assets';
 import type { CollectionEntry } from 'astro:content';
 import { getRelativeLocaleUrl } from 'astro:i18n';
 import { ArrowLeft, Clock, Mail } from 'lucide-react';
@@ -67,22 +66,28 @@ const pageDescription = post.description;
         </p>
 
         <p class="flex items-center">
-          <Clock className="mr-1.5 size-4 flex-shrink-0" />
           <span>{post.readingTimeMinutes} {t('readingTimeSuffix')}</span>
         </p>
       </div>
 
-      {
-        post.heroImage && (
-          <Image
-            src={post.heroImage.url}
-            alt={post.heroImage.alt}
-            class="w-full h-auto object-cover rounded-lg my-6 shadow-lg"
-            width={768}
-            height={432}
-          />
-        )
-      }
+{
+  post.heroImage && (
+    <>
+      <a
+        href={post.heroImage.url}
+        target="_blank"
+        rel="noopener noreferrer"
+        class="block group"
+      >
+        <img 
+  src={post.heroImage.url} 
+  alt={post.heroImage.alt}
+  class="w-full h-auto object-cover rounded-lg my-6 shadow-lg transition-all duration-300 hover:scale-[1.01] hover:brightness-95"
+/>
+      </a>
+    </>
+  )
+}
       {
         post.tags && post.tags.length > 0 && (
           <div class="mt-4 flex flex-wrap gap-2">

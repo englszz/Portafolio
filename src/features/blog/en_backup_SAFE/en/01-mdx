@@ -1,0 +1,18 @@
+---
+lang: 'en'
+title: 'Mi Logro Simplificado'
+description: 'La descripción breve que aparecerá en la lista de logros.'
+pubDate: 2021-01-15
+heroImage:
+  url: '../../../../assets/nutri.png'
+  alt: 'Foto del Logro'
+tags: ['astro', 'javascript', 'template']
+difficulty: 'beginner'
+isDraft: false
+featured: true
+relatedPosts: []
+---
+
+## Main Content
+
+Lorem ipsum dolor sit amet, consectetur adipiscing elit. Sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat.

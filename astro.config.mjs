@@ -17,7 +17,7 @@ const mermaidStrategy = isProduction || isVercel ? 'pre-built' : 'inline-svg';
 console.log(`Using Mermaid strategy: ${mermaidStrategy}`);
 
 export default defineConfig({
-  site: 'https://example.com',
+  site: 'https://engels-damiron.vercel.app',
 
   // ⭐ AÑADIDO: ALIAS PARA QUE FUNCIONE "@/assets"
   vite: {
@@ -51,8 +51,8 @@ export default defineConfig({
   ],
 
   i18n: {
-    locales: ['en'],
-    defaultLocale: 'en',
+    locales: ['es'],
+    defaultLocale: 'es',
     routing: {
       prefixDefaultLocale: false,
     },

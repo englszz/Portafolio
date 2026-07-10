@@ -7,12 +7,10 @@ export function cn(...inputs: ClassValue[]) {
 }
 
 export function formatDate(dateString: Date, lang: LanguageCode) {
-  let locale = 'en-US';
+  let locale = 'es-ES';
 
-  if (lang === 'es') {
-    locale = 'es-ES';
-  } else if (lang === 'fr') {
-    locale = 'fr-FR';
+  if (lang === 'en') {
+    locale = 'en-US';
   }
 
   return new Intl.DateTimeFormat(locale, {

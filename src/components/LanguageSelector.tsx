@@ -54,12 +54,12 @@ export function LanguageSelector({
           size="icon"
           disabled={isPending}
           className="size-8 p-0 hover:bg-accent"
-          aria-label="Changer de langue"
+          aria-label="Cambiar idioma"
         >
           {currentLanguage ? (
             <img
               src={`https://flagcdn.com/w20/${currentLanguage.flag}.png`}
-              alt={`Drapeau ${currentLanguage.name}`}
+              alt={`Bandera de ${currentLanguage.name}`}
               width={20}
               height={15}
               className="object-contain"
@@ -83,7 +83,7 @@ export function LanguageSelector({
           >
             <img
               src={`https://flagcdn.com/w20/${lang.flag}.png`}
-              alt={`Drapeau ${lang.name}`}
+              alt={`Bandera de ${lang.name}`}
               width={20}
               height={15}
               className="object-contain mr-2"

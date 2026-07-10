@@ -46,12 +46,10 @@ const {
           <div class="flex items-center space-x-3">
             <Mail class="size-6 text-primary flex-shrink-0" />
             <a 
-              href={`https://mail.google.com/mail/u/0/?view=cm&fs=1&to=${CONTACT_EMAIL}`}
-              target="_blank"
-              rel="noopener noreferrer"
+              href={`mailto:${CONTACT_EMAIL}`}
               class="text-base font-medium text-foreground hover:text-primary transition-colors truncate"
             >
-              Gmail: {CONTACT_EMAIL}
+              {CONTACT_EMAIL}
             </a>
           </div>
           

@@ -20,7 +20,7 @@ import type {
 // For this template, we will simulate the email sending.
 
 export const POST: APIRoute = async ({ request }) => {
-  let lang: LanguageCode = 'en'; // Default language
+  let lang: LanguageCode = 'es'; // Default language
   let currentTranslations: ContactFormTranslations = ui[lang]
     .contactPage as ContactFormTranslations; // Default translations
   // In a real implementation, you might check if your email service is configured:

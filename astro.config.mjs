@@ -11,8 +11,8 @@ import vercel from '@astrojs/vercel';
 const isProduction = process.env.NODE_ENV === 'production';
 const isVercel = process.env.VERCEL === '1';
 
-// Use 'pre-built' on Vercel/production to avoid Playwright, 'inline-svg' locally
-const mermaidStrategy = isProduction || isVercel ? 'pre-built' : 'inline-svg';
+// Use 'pre-mermaid' on Vercel/production to avoid Playwright, 'inline-svg' locally
+const mermaidStrategy = isProduction || isVercel ? 'pre-mermaid' : 'inline-svg';
 
 console.log(`Using Mermaid strategy: ${mermaidStrategy}`);
 
@@ -36,10 +36,7 @@ export default defineConfig({
         [
           rehypeMermaid,
           {
-            strategy:
-              process.env.NODE_ENV === 'production'
-                ? 'pre-mermaid'
-                : 'inline-svg',
+            strategy: mermaidStrategy,
           },
         ],
       ],

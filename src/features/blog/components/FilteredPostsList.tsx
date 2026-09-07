@@ -59,8 +59,8 @@ export function FilteredPostsList({
   initialSearchQuery = '',
   initialTag = '',
 }: FilteredPostsListProps) {
-  const [searchQuery, setSearchQuery] = React.useState(initialSearchQuery);
-  const [selectedTag, setSelectedTag] = React.useState(initialTag);
+  const [searchQuery, setSearchQuery] = React.useState(() => typeof window === "undefined" ? initialSearchQuery : new URLSearchParams(window.location.search).get("q") || "");
+  const [selectedTag, setSelectedTag] = React.useState(() => typeof window === "undefined" ? initialTag : new URLSearchParams(window.location.search).get("tag") || "");
 
   React.useEffect(() => {
     // Met à jour l'URL lorsque les filtres changent

@@ -1,4 +1,5 @@
-﻿import { ui, defaultLanguage, type LanguageCode } from '@/i18n/ui';
+﻿import { translateTag } from '@/i18n/tags';
+import { ui, defaultLanguage, type LanguageCode } from '@/i18n/ui';
 import { projectsListUnsorted } from './data/projects-data';
 import { skillsList } from './data/skills-data';
 import type {
@@ -56,12 +57,13 @@ function translateProject(
   const galleryImagesTranslated =
     project.galleryImages?.map((gi) => ({
       ...gi,
-      alt: `Imagen de ${project.id}`,
+      alt: `${lang === "es" ? "Imagen de" : "Image of"} ${project.id}`,
       caption: '',
     })) ?? [];
 
   return {
     ...project,
+    tags: project.tags.map((tag) => translateTag(tag, lang)),
     title: i18nData.title,
     description: i18nData.description,
     imageAltText: i18nData.imageAltText,
@@ -121,6 +123,7 @@ export function getTranslatedSkills(
 
     return {
       ...skill,
+      technologies: skill.technologies.map((tech) => ({ ...tech, name: tech.id === "responsive" && currentLang === "es" ? "Diseño adaptable" : tech.name })),
       title: skillTranslations.title,
       description: skillTranslations.description,
     };

@@ -1,0 +1,37 @@
+---
+import { BlogPostDetailScreen } from '@/features/blog';
+import { defaultLanguage, type LanguageCode } from '@/i18n/ui';
+import { getCollection, getEntries, render, type CollectionEntry } from 'astro:content';
+
+const lang = 'en' as const;
+
+export async function getStaticPaths() {
+  const blogEntries = await getCollection('blog', ({ data }) => {
+    return data.isDraft !== true && data.lang === 'en';
+  });
+  return blogEntries.map((post) => ({
+    params: { slug: post.data.translationKey },
+    props: { post },
+  }));
+}
+const { post } = Astro.props;
+
+const baseRelatedPosts = post.data.relatedPosts
+  ? await getEntries(post.data.relatedPosts)
+  : [];
+
+const finalRelatedPosts = baseRelatedPosts.filter(
+  (p): p is CollectionEntry<'blog'> => p !== null
+);
+
+const { Content } = await render(post);
+---
+
+<BlogPostDetailScreen
+  post={post.data}
+  lang={lang}
+  relatedPosts={finalRelatedPosts}
+  filePath={post.filePath ? post.filePath : ''}
+>
+  <Content />
+</BlogPostDetailScreen>

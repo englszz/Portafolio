@@ -2,7 +2,7 @@
 import { useTranslations } from '@/i18n/ui';
 import BaseLayout from '@/layouts/BaseLayout.astro';
 import type { CollectionEntry } from 'astro:content';
-import { formatDate } from 'date-fns/format';
+import { formatDate } from '@/lib/utils';
 
 export type Props = {
   entry: CollectionEntry<'blog'>;
@@ -70,17 +70,10 @@ const { pubDate, updatedDate } = post;
     <footer
       class="mt-12 pt-8 border-t border-border flex justify-between items-center"
     >
-      <a href="/blog" class="text-primary hover:underline">
+      <a href={lang === "en" ? "/en/blog" : "/blog"} class="text-primary hover:underline">
         &larr; {t('backToList')}
       </a>
-      <a
-        href={editUrl}
-        target="_blank"
-        rel="noopener noreferrer"
-        class="text-sm text-muted-foreground hover:text-primary hover:underline"
-      >
-        {t('editOnGithub')}
-      </a>
+
     </footer>
   </article>
 </BaseLayout>

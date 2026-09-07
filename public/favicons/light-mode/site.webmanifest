@@ -1,21 +1,17 @@
 {
-  "name": "Astro Theme Starter",
-  "short_name": "AstroTheme",
+  "name": "Engels Damirón",
+  "short_name": "Engels",
   "icons": [
     {
-      "src": "/favicons/light-mode/web-app-manifest-192x192.png",
-      "sizes": "192x192",
+      "src": "/favicons/light-mode/ed1.png",
+      "sizes": "any",
       "type": "image/png",
-      "purpose": "maskable"
-    },
-    {
-      "src": "/favicons/light-mode/web-app-manifest-512x512.png",
-      "sizes": "512x512",
-      "type": "image/png",
-      "purpose": "maskable"
+      "purpose": "any"
     }
   ],
   "theme_color": "#ffffff",
   "background_color": "#ffffff",
-  "display": "standalone"
+  "display": "standalone",
+  "start_url": "/",
+  "scope": "/"
 }

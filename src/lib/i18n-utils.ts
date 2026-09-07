@@ -29,7 +29,7 @@ export function prepareLanguagesForSelector(
       code: langCode,
       name: languages[langCode].name,
       flag: languages[langCode].flag,
-      targetUrl: getRelativeLocaleUrl(langCode, basePathForLinks),
+      targetUrl: /\/404(?:\.html)?\/?$/.test(basePathForLinks) ? (langCode === "es" ? "/404.html" : "/en/404/") : getRelativeLocaleUrl(langCode, basePathForLinks),
     };
   });
 }

@@ -1,14 +1,46 @@
-export const languages: Record<'es', { name: string; flag: string }> = {
+export const languages: Record<'es' | 'en', { name: string; flag: string }> = {
   es: { name: 'Español', flag: 'do' },
+  en: { name: 'English', flag: 'gb' },
 } as const;
 
 export const defaultLanguage = 'es';
 
 export type LanguageCode = keyof typeof languages;
 
+import { en } from './en';
+
 export const ui = {
+  en,
   es: {
     projectsContent: {
+      'DING': {
+        title: 'DING',
+        description: 'Diario musical personal con calificaciones, reseñas y capa social entre usuarios.',
+        imageAltText: 'Imagen del proyecto DING',
+        categoryText: 'Aplicación Web',
+        dateText: '1 de septiembre, 2026',
+        detailedDescription: 'Diario musical personal donde los usuarios registran su historial de escuchas, califican álbumes y canciones individualmente (track por track, escala 0.0–10.0), y descubren música a través de perfiles de amigos. Construido con Next.js y Supabase, con búsqueda de metadatos vía MusicBrainz y portadas en alta calidad de Cover Art Archive. Incluye una capa social: los usuarios pueden comentar en las reseñas de otros, convirtiendo el diario en un espacio compartido de descubrimiento musical, no solo un registro privado.',
+        keyFeatures: {
+          'Sistema de calificación granular': {
+            title: 'Sistema de calificación granular',
+            description: 'Álbum completo o canción por canción (escala 0.0–10.0).',
+          },
+          'Reseñas múltiples por álbum': {
+            title: 'Reseñas múltiples por álbum',
+            description: 'Permite registrar reescuchas a lo largo del tiempo.',
+          },
+          'Integración con APIs externas abiertas': {
+            title: 'Integración con APIs externas abiertas',
+            description: 'MusicBrainz y Cover Art Archive para metadatos y portadas en alta calidad.',
+          },
+          'Perfiles públicos con función social': {
+            title: 'Perfiles públicos con función social',
+            description: 'Comentarios en las reseñas entre usuarios.',
+          },
+        },
+        challenges: 'El mayor reto fue diseñar un modelo de datos que soportara calificaciones a distintos niveles (álbum y canción) sin duplicar lógica ni volver lenta la búsqueda. Trabajar con MusicBrainz también implicó lidiar con metadatos inconsistentes de una base abierta y mantenida por la comunidad.',
+        learnings: 'Añadir la capa social — comentarios entre usuarios — significó pasar de un CRUD simple a pensar en permisos, moderación básica y relaciones entre usuarios usando Row Level Security de Supabase.',
+      },
       'EDP Calendar': {
         title: 'EDP Calendar',
         description: 'Calendario híbrido para gestión personal y proyectos freelance con recordatorios por email.',
@@ -30,7 +62,7 @@ export const ui = {
             description: 'No solo cuánto falta, sino cuánto se ha avanzado, con gráficas de distribución por categoría, prioridad y actividad semanal.',
           },
         },
-        challenges: 'El mayor reto fue el sistema de notificaciones. iOS bloquea las notificaciones push en apps web, lo que obligó a replantear toda la arquitectura y optar por recordatorios vía email con un servidor externo. Configurar Firebase Cloud Functions, manejar permisos de Google Cloud y resolver conflictos de versiones en las dependencias consumió la mayor parte del tiempo de desarrollo.',
+        challenges: 'El mayor reto fue el sistema de notificaciones. Las limitaciones de notificaciones push en iOS que encontré durante el desarrollo me llevaron a replantear la arquitectura y optar por recordatorios vía email con un servidor externo. Configurar Firebase Cloud Functions, manejar permisos de Google Cloud y resolver conflictos de versiones en las dependencias consumió la mayor parte del tiempo de desarrollo.',
         learnings: 'Que la solución más obvia no siempre es la correcta. Empezar con notificaciones push parecía lo natural, pero las limitaciones de iOS llevaron a una solución más robusta y multiplataforma. También que separar las credenciales del código desde el inicio ahorra horas de dolores de cabeza con GitHub y la seguridad del proyecto.',
       },
       'AJ Dent': {
@@ -39,7 +71,7 @@ export const ui = {
         imageAltText: 'Imagen del proyecto AJ Dent',
         categoryText: 'Clínica Dental',
         dateText: '12 de abril, 2026',
-        detailedDescription: 'Sitio web desarrollado para AJ Dent, enfocado en presentar servicios odontológicos de forma clara, moderna y orientada a conversión. La web prioriza la experiencia del usuario, con acceso rápido a información clave y contacto directo vía WhatsApp para agendar citas sin fricción. El despliegue se realizó usando Vercel, permitiendo una carga rápida y disponibilidad constante.',
+        detailedDescription: 'Landing page para clínica dental con panel administrativo construido sobre Supabase (con Row Level Security), modelo 3D interactivo y chatbot con IA integrado vía WhatsApp para gestión de citas y atención al cliente. Manejé también la presencia digital y redes sociales del negocio.',
         keyFeatures: {
           'Sistema funcional': {
             title: 'Sistema funcional',
@@ -59,11 +91,11 @@ export const ui = {
       },
       'EDP.web': {
         title: 'EDP.web',
-        description: 'Sitio web minimalista e interactivo para una agencia de desarrollo web moderna.',
+        description: 'Agencia freelance de desarrollo web para negocios locales en Santo Domingo. Cerró en agosto de 2026.',
         imageAltText: 'Imagen del proyecto EDP.web',
         categoryText: 'Agencia de Páginas Web',
-        dateText: '6 de enero, 2026',
-        detailedDescription: 'EDP.web es el sitio web de una agencia de desarrollo web que busca transmitir profesionalismo y modernidad desde el primer momento. El objetivo principal era crear una landing page elegante y minimalista que convierta visitantes en clientes potenciales, mostrando los servicios de la agencia de forma clara y atractiva.',
+        dateText: 'Diciembre de 2025 – agosto de 2026',
+        detailedDescription: 'Agencia freelance de desarrollo web que fundé y operé para negocios locales en Santo Domingo, construyendo sitios funcionales y modernos de principio a fin. Operó desde diciembre de 2025 hasta agosto de 2026.',
         keyFeatures: {
           'Aspectos de Marca': {
             title: 'Aspectos de Marca',
@@ -84,17 +116,13 @@ export const ui = {
         description:
           'HTML, CSS, JavaScript, TypeScript, Astro y React. Construcción de interfaces modernas, responsivas y accesibles.',
       },
-      englishLevel: {
-        title: 'Inglés Intermedio',
-        description: 'O&M — Nivel intermedio-alto con enfoque en pronunciación, presentaciones orales y comunicación técnica.',
+      itSupport: {
+        title: 'Soporte IT y gestión de datos',
+        description: 'Apoyo en tareas tecnológicas institucionales, actualización de registros y revisión de datos en SQL Server durante mi pasantía.',
       },
       uiUxDesign: {
         title: 'Diseño UI/UX & Gráfico',
         description: 'Figma, identidad visual, paletas de color y diseño de marca.',
-      },
-      leadership: {
-        title: 'MUNs – Liderazgo',
-        description: 'Delegado y miembro de la mesa directiva en Modelo de las Naciones Unidas (2023–2026). Oratoria, negociación y liderazgo.',
       },
       officeTools: {
         title: 'Herramientas de Oficina',
@@ -104,7 +132,7 @@ export const ui = {
     site: {
       title: 'Engels Damirón',
       description:
-        'Portafolio de Engels Smith Damirón — Futuro ingeniero en ciberseguridad con experiencia en soporte IT y desarrollo web.',
+        'Portafolio de Engels Smith Damirón — Desarrollador web y técnico IT, estudiante de Ingeniería en Ciberseguridad.',
     },
     nav: {
       home: 'Inicio',
@@ -118,12 +146,12 @@ export const ui = {
     homePage: {
       pageTitle: 'Inicio | Engels Damirón',
       pageDescription:
-        'Portafolio de Engels Smith Damirón — Futuro ingeniero en ciberseguridad, técnico en soporte IT y desarrollador web con proyectos reales.',
+        'Portafolio de Engels Smith Damirón — Desarrollador web y técnico IT con experiencia práctica, estudiante de Ingeniería en Ciberseguridad.',
       heroGreeting: "Engels Damirón",
-      heroSubtitlePart1: 'Soporte IT & Redes',
+      heroSubtitlePart1: 'Soporte IT',
       heroSubtitlePart2: 'Desarrollo Web',
-      heroSubtitlePart3: 'Ciberseguridad',
-      heroIntroduction: 'Futuro ingeniero en ciberseguridad con experiencia práctica en soporte IT, redes y desarrollo web. Construyo soluciones reales, aprendo constantemente y busco aportar valor desde la tecnología.',
+      heroSubtitlePart3: 'Estudiante de Ciberseguridad',
+      heroIntroduction: 'Desarrollador web y técnico IT con experiencia en proyectos para negocios locales y soporte institucional. Actualmente estudio Ingeniería en Ciberseguridad en UNICARIBE.',
       heroViewWorkButton: 'Ver mis proyectos',
       heroContactButton: 'Contáctame',
       heroImageAlt:
@@ -134,9 +162,9 @@ export const ui = {
       projectCardViewProject: 'Ver proyecto',
       projectCardViewCode: 'Ver código',
       imageNotAvailable: 'Imagen no disponible',
-      mySkillsTitle: 'Mis Habilidades',
+      mySkillsTitle: 'Formación y experiencia',
       mySkillsDescription:
-        'Habilidades técnicas, formación académica y experiencia que me definen.',
+        'Mi formación, experiencia laboral y habilidades técnicas y profesionales.',
     },
     blogPage: {
       pageTitle: 'Trayectoria | Engels Damirón',
@@ -219,7 +247,7 @@ export const ui = {
       pageTitle: 'Página no encontrada',
       title: '¡Oops! Página no encontrada.',
       message:
-        'Aún estoy trabajando en esta sección. Mientras tanto, puedes regresar al inicio.',
+        'Esta página no existe o ha cambiado de dirección. Puedes regresar al inicio.',
       homeLink: 'Volver al inicio',
     },
     zodErrors: {

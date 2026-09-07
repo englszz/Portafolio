@@ -1,16 +1,17 @@
 ---
+import { getLocale } from '@/i18n/routing';
 import { defaultLanguage, type LanguageCode } from '@/i18n/ui';
 import { getRelativeLocaleUrl } from 'astro:i18n';
 import { cn } from '@/lib/utils';
 import ThemeToggle from './ThemeToggle.astro';
-import { LanguageSelector } from './LanguageSelector';
+import LocaleSelector from './LocaleSelector.astro';
 import { type LanguageSelectorItem } from '@/lib/i18n-utils';
 
 import type { NavItem } from '@/layouts/BaseLayout.astro';
 import { buttonVariants } from './ui/button';
 
 const currentLocale =
-  (Astro.currentLocale as LanguageCode | undefined) ?? defaultLanguage;
+  (getLocale(Astro.url.pathname) as LanguageCode | undefined) ?? defaultLanguage;
 const currentPathname = Astro.url.pathname;
 
 export interface Props {
@@ -24,7 +25,7 @@ const { navItems, languagesForSelector } = Astro.props;
 <nav
   class="md:hidden fixed bottom-0 left-0 z-50 w-full bg-background p-2 border-t border-border"
   role="navigation"
-  aria-label="Main navigation"
+  aria-label={currentLocale === "es" ? "Navegación principal" : "Main navigation"}
 >
   <div
     class:list={[
@@ -97,13 +98,9 @@ const { navItems, languagesForSelector } = Astro.props;
       })
     }
     {/* Theme Toggle Button */}
-    <div class="flex items-center gap-x-3">
+    <div class="flex items-center gap-x-1">
       <ThemeToggle />
-      <LanguageSelector
-        currentLocale={currentLocale}
-        languages={languagesForSelector}
-        client:load
-      />
+      <LocaleSelector />
       
     </div>
   </div>

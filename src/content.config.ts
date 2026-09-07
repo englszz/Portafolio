@@ -9,6 +9,7 @@ const blogCollection = defineCollection({
   schema: () =>
     z.object({
       title: z.string(),
+      translationKey: z.string(),
       description: z.string().optional(),
       pubDate: z.coerce.date(),
       updatedDate: z.coerce.date().optional(),
@@ -18,9 +19,9 @@ const blogCollection = defineCollection({
           alt: z.string(),
         })
         .optional(),
+      youtubeId: z.string().optional(),
       tags: z.array(z.string()).optional(),
       relatedPosts: z.array(reference('blog')),
-      readingTimeMinutes: z.number().optional(),
       isDraft: z.boolean(),
       lang: z.enum(['es', 'en']).optional().default('es'),
     }),

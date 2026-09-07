@@ -1,0 +1,30 @@
+---
+import { getLocale } from '@/i18n/routing';
+import { prepareLanguagesForSelector } from '@/lib/i18n-utils';
+import { defaultLanguage, type LanguageCode } from '@/i18n/ui';
+const lang = (getLocale(Astro.url.pathname) ?? defaultLanguage) as LanguageCode;
+const options = prepareLanguagesForSelector(Astro.url.pathname, lang);
+---
+<nav aria-label={lang === 'es' ? 'Idioma' : 'Language'} class="flex items-center gap-1 text-xs font-semibold shrink-0">
+  {options.map((option) => (
+    <a href={option.targetUrl} lang={option.code} hreflang={option.code}
+      data-language={option.code} data-astro-reload
+      aria-current={option.code === lang ? 'true' : undefined}
+      aria-label={option.name}
+      class:list={['px-2 py-3 rounded-md transition-colors focus-visible:ring-2 focus-visible:ring-ring', option.code === lang ? 'bg-primary/10 text-primary' : 'text-muted-foreground hover:text-foreground']}>
+      {option.code.toUpperCase()}
+    </a>
+  ))}
+</nav>
+<script>
+  document.addEventListener('click', (event) => {
+    const target = event.target instanceof Element ? event.target.closest<HTMLAnchorElement>('a[data-language]') : null;
+    if (!target) return;
+    // Keep anchors and ordinary queries; category names differ between languages.
+    const url = new URL(target.href);
+    url.search = window.location.search;
+    url.searchParams.delete('tag');
+    url.hash = window.location.hash;
+    target.href = url.href;
+  });
+</script>

@@ -7,12 +7,13 @@ interface ExtraImage {
 }
 
 interface ExtraGalleryProps {
+  lang?: "es" | "en";
   images: ExtraImage[];
   title?: string;
   description?: string;
 }
 
-export default function ExtraGallery({ images, title, description }: ExtraGalleryProps) {
+export default function ExtraGallery({ images, title, description, lang = "es" }: ExtraGalleryProps) {
   const [lightboxOpen, setLightboxOpen] = useState(false);
   const [lightboxIndex, setLightboxIndex] = useState(0);
 
@@ -56,6 +57,7 @@ export default function ExtraGallery({ images, title, description }: ExtraGaller
       </div>
 
       <ImageLightbox
+        lang={lang}
         images={images}
         initialIndex={lightboxIndex}
         open={lightboxOpen}

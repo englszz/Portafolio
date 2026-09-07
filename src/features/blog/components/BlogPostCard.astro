@@ -21,18 +21,31 @@ interface Props {
 
 const { post, lang } = Astro.props;
 const t = useTranslations(lang, 'blogPost');
+const postUrl = getRelativeLocaleUrl(lang, `/blog/${post.data.translationKey}`);
+const youtubeId = (post.data as any).youtubeId;
 ---
 
-<a
-  href={getRelativeLocaleUrl(lang, `/blog/${post.id}`)}
-  class="block group rounded-lg focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring focus-visible:ring-offset-2"
+<div
+  class="block min-w-0 group rounded-lg focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring focus-visible:ring-offset-2 h-full"
 >
   <Card
-    className="rounded-lg shadow-md hover:shadow-xl transition-shadow duration-300 pt-0 h-full flex flex-col"
+    className="min-w-0 rounded-lg shadow-md hover:shadow-xl transition-shadow duration-300 pt-0 h-full flex flex-col overflow-hidden"
   >
     {
-      post.data.heroImage ? (
-        <div class="w-full h-64 overflow-hidden rounded-t-lg flex-shrink-0">
+      youtubeId ? (
+        <div class="w-full aspect-video overflow-hidden rounded-t-lg flex-shrink-0 bg-black relative z-10">
+          <iframe
+            class="w-full h-full border-0"
+            src={`https://www.youtube.com/embed/${youtubeId}`}
+            title={post.data.title}
+            frameborder="0"
+            allow="accelerated-fullscreen; autoplay; encrypted-media; gyroscope; picture-in-picture"
+            allowfullscreen
+            loading="lazy"
+          />
+        </div>
+      ) : post.data.heroImage ? (
+        <a href={postUrl} class="block w-full h-64 overflow-hidden rounded-t-lg flex-shrink-0">
           <img
             src={post.data.heroImage.url}
             alt={post.data.heroImage.alt}
@@ -41,26 +54,21 @@ const t = useTranslations(lang, 'blogPost');
             height={432}
             loading="lazy"
           />
-        </div>
+        </a>
       ) : (
         <div class="w-full h-12 bg-muted" />
       )
     }
     <CardHeader className="flex-shrink-0">
-      <CardTitle
-        className="text-xl font-semibold line-clamp-1 group-hover:text-primary transition-colors"
-      >
-        {post.data.title}
-      </CardTitle>
-      <CardDescription className="flex justify-between pt-1">
+      <a href={postUrl} class="hover:text-primary transition-colors">
+        <CardTitle
+          className="text-xl font-semibold line-clamp-3 group-hover:text-primary transition-colors"
+        >
+          {post.data.title}
+        </CardTitle>
+      </a>
+      <CardDescription className="pt-1">
         <p>{t('publishedOn') + formatDate(post.data.pubDate, lang)}</p>
-        {
-          post.data.readingTimeMinutes != null ? (
-            <p class="flex items-center">
-              <Clock className="mr-1.5 size-4 flex-shrink-0" />
-            </p>
-          ) : null
-        }
       </CardDescription>
     </CardHeader>
     <CardContent className="flex-grow space-y-2 flex-shrink-0">
@@ -73,7 +81,7 @@ const t = useTranslations(lang, 'blogPost');
       }
       {
         post.data.tags && post.data.tags.length > 0 && (
-          <div class="flex gap-2 pt-2 line-clamp-1">
+          <div class="flex flex-wrap gap-2 pt-2">
             {post.data.tags.slice(0, 3).map((tag: string) => (
               <Badge variant="secondary" key={tag} className="text-xs">
                 {tag}
@@ -89,9 +97,9 @@ const t = useTranslations(lang, 'blogPost');
       }
     </CardContent>
     <CardFooter className="mt-auto flex-shrink-0">
-      <span class="text-sm text-primary font-medium group-hover:underline">
+      <a href={postUrl} class="text-sm text-primary font-medium group-hover:underline">
         {t('readMore')} &rarr;
-      </span>
+      </a>
     </CardFooter>
   </Card>
-</a>
+</div>

@@ -1,4 +1,5 @@
 ---
+import { homeContent } from '@/i18n/home';
 import Heading from '@/components/Heading.astro';
 import SkillCard from '@/components/SkillCard.astro';
 import { buttonVariants } from '@/components/ui/button';
@@ -48,20 +49,21 @@ const {
   mySkillsDescription,
   projectPreviewCtaText,
 } = Astro.props;
+const copy = homeContent[lang];
 
 ---
 
 {/* ─── HERO ─── */}
 <section class="py-12 md:py-16">
-  <div class="grid md:grid-cols-2 gap-12 items-center justify-between">
+  <div class="grid md:grid-cols-2 gap-8 lg:gap-12 items-center justify-between">
     {/* Hero Text Column */}
-    <div class="text-center md:text-left">
+    <div class="min-w-0 text-center md:text-left">
       <div class="inline-flex items-center gap-2 px-3 py-1.5 rounded-full bg-primary/10 text-primary text-sm font-medium mb-5 border border-primary/20">
         <span class="relative flex h-2 w-2">
           <span class="animate-ping absolute inline-flex h-full w-full rounded-full bg-primary opacity-75"></span>
           <span class="relative inline-flex rounded-full h-2 w-2 bg-primary"></span>
         </span>
-        Abierto a nuevos proyectos
+        {copy.available}
       </div>
 
       <h1 class="text-4xl md:text-5xl lg:text-6xl font-bold tracking-tight mb-4">
@@ -77,7 +79,7 @@ const {
       </p>
 
      {/* CTA Buttons */}
-<div class="flex flex-col sm:flex-row gap-3 justify-center md:justify-start mb-8">
+<div class="flex flex-col sm:flex-row sm:flex-wrap gap-3 justify-center md:justify-start mb-8">
   {/* Botón: Ver proyectos */}
   <a
     href={getRelativeLocaleUrl(lang, "/projects")}
@@ -102,7 +104,7 @@ const {
   class={buttonVariants({ variant: 'outline', size: 'lg' })}
 >
   <GraduationCap className="mr-2 size-4" />
-  Formación
+  {copy.educationLink}
 </a>
 </div>
 
@@ -114,7 +116,7 @@ const {
           href="https://github.com/englszz"
           target="_blank"
           rel="noopener noreferrer"
-          aria-label="GitHub de Engels Damirón"
+          aria-label={lang === "es" ? "GitHub de Engels Damirón" : "Engels Damirón on GitHub"}
           class="flex items-center gap-2 text-sm text-muted-foreground hover:text-foreground transition-colors group"
         >
           <Github className="size-5 group-hover:text-primary transition-colors" />
@@ -125,7 +127,7 @@ const {
           href="https://www.linkedin.com/in/engelsdamiron/?locale=en"
           target="_blank"
           rel="noopener noreferrer"
-          aria-label="LinkedIn de Engels Damirón"
+          aria-label={lang === "es" ? "LinkedIn de Engels Damirón" : "Engels Damirón on LinkedIn"}
           class="flex items-center gap-2 text-sm text-muted-foreground hover:text-foreground transition-colors group"
         >
           <Linkedin className="size-5 group-hover:text-primary transition-colors" />
@@ -133,14 +135,14 @@ const {
         </a>
         <span class="text-muted-foreground/30">•</span>
         <a
-          href="/CV-Engels.pdf"
+          href={lang === 'es' ? '/Engels_Damiron_CV_ES.pdf' : '/Engels_Damiron_CV_EN.pdf'}
           target="_blank"
           rel="noopener noreferrer"
-          aria-label="Descargar CV de Engels Damirón"
+          aria-label={copy.cv}
           class="flex items-center gap-2 text-sm text-muted-foreground hover:text-foreground transition-colors group"
         >
           <FileText className="size-5 group-hover:text-primary transition-colors" />
-          <span class="hidden sm:inline">Descargar CV</span>
+          <span class="hidden sm:inline">{copy.cv}</span>
         </a>
       </div>
     </div>
@@ -148,11 +150,11 @@ const {
     {/* Hero Image */}
     <div class="md:text-center">
       <div
-        class="md:w-[600px] w-full h-92 bg-muted rounded-lg shadow-xl overflow-hidden mx-auto"
+        class="w-full max-w-[600px] aspect-[600/368] bg-muted rounded-lg shadow-xl overflow-hidden mx-auto"
       >
         <Image
           src={heroImage}
-          alt={'Foto de perfil de Engels Damirón'}
+          alt={lang === 'es' ? 'Foto de perfil de Engels Damirón' : 'Portrait of Engels Damirón'}
           width={600}
           height={368}
           densities={[1, 1.5, 2]}
@@ -165,31 +167,22 @@ const {
   </div>
 </section>
 
-{/* ─── SOBRE MÍ ─── */}
 <section id="about" class="py-14 md:py-20 border-t border-border/50">
   <div class="grid md:grid-cols-5 gap-10 items-start">
     <div class="md:col-span-2">
-      <span class="text-primary font-semibold text-sm uppercase tracking-widest block mb-2">¿Quién soy?</span>
-      <h2 class="text-3xl md:text-4xl font-bold mb-4">Sobre mí</h2>
-      <p class="text-muted-foreground text-sm">Desarrollador web, técnico en IT y emprendedor digital desde República Dominicana.</p>
+      <span class="text-primary font-semibold text-sm uppercase tracking-widest block mb-2">{copy.aboutLabel}</span>
+      <h2 class="text-3xl md:text-4xl font-bold mb-4">{copy.aboutTitle}</h2>
+      <p class="text-muted-foreground text-sm">{copy.aboutIntro}</p>
     </div>
     <div class="md:col-span-3 space-y-4 text-muted-foreground leading-relaxed">
-      <p>
-        Soy <strong class="text-foreground">Engels Smith Damirón</strong>, fundador de <strong class="text-foreground">EDP.web</strong>, una agencia de desarrollo web enfocada en negocios locales en Santo Domingo. Construyo sitios web funcionales y modernos para pequeñas y medianas empresas, gestionando todo el proceso: desde el diseño hasta el deployment y la estrategia digital.
-      </p>
-      <p>
-        Soy técnico en informática graduado del <strong class="text-foreground">Politécnico Parroquial Betania</strong> y actualmente estudio <strong class="text-foreground">Ingeniería en Ciberseguridad</strong> en UNICARIBE. Cuento con experiencia en soporte técnico institucional a través del <strong class="text-foreground">Programa de Verano y pasantía en FUNDAPEC</strong>.
-      </p>
-      <p>
-        Me muevo entre el desarrollo web, el soporte IT y la ciberseguridad — tres áreas que considero complementarias. Soy autodidacta, orientado a resultados y con experiencia real trabajando con clientes.
-      </p>
+      {copy.about.map((paragraph) => <p>{paragraph}</p>)}
     </div>
   </div>
 </section>
 
 {/* ─── PROYECTOS DESTACADOS ─── */}
 <section id="projects" class="py-14 md:py-20 border-t border-border/50 bg-muted/20 dark:bg-muted/10">
-  <Heading
+  <Heading as="h2"
     title={featuredProjectsTitle}
     description={featuredProjectsDescription}
     className="flex flex-col items-center"
@@ -219,114 +212,75 @@ const {
       href={getRelativeLocaleUrl(lang, '/projects')}
       class={buttonVariants({ variant: 'outline', size: 'lg' })}
     >
-      Ver todos los proyectos →
+      {copy.allProjects} →
     </a>
   </div>
 </section>
 
-{/* ─── HABILIDADES Y PERFIL ─── */}
+<section class="py-14 md:py-20 border-t border-border/50">
+  <div class="max-w-3xl mx-auto">
+    <div class="mb-8 text-center md:text-left">
+      <span class="text-primary font-semibold text-sm uppercase tracking-widest block mb-2">{copy.nowLabel}</span>
+      <h2 class="text-3xl md:text-4xl font-bold tracking-tight">{copy.nowTitle}</h2>
+    </div>
+    <div class="relative pl-8 sm:pl-10 border-l-2 border-border ml-2 sm:ml-4 py-1">
+      <div class="absolute -left-[9px] top-1.5 w-4 h-4 rounded-full bg-primary ring-4 ring-background"></div>
+      <p class="text-base md:text-lg text-muted-foreground leading-relaxed">{copy.now}</p>
+    </div>
+  </div>
+</section>
+
 <section id="skills" class="py-14 md:py-20 border-t border-border/50">
   <div class="mb-12 text-center">
-    <span class="text-primary font-semibold text-sm uppercase tracking-widest block mb-2">Mi perfil</span>
+    <span class="text-primary font-semibold text-sm uppercase tracking-widest block mb-2">{copy.profile}</span>
     <h2 class="text-3xl md:text-4xl font-bold mb-3">{mySkillsTitle}</h2>
     <p class="text-muted-foreground max-w-xl mx-auto">{mySkillsDescription}</p>
   </div>
-
-{/* Educación */}
-<div class="mb-10">
-  <div class="flex items-center gap-3 mb-5">
-    <div class="p-2 rounded-lg bg-primary/10"><GraduationCap className="size-5 text-primary" client:load /></div>
-    <h3 class="text-xl font-semibold">Educación</h3>
-  </div>
-  <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-4">
-    <div class="border border-border rounded-xl p-5 hover:border-primary/40 transition-colors bg-card">
-      <p class="font-semibold text-foreground">Estudiante de Ingeniería en Ciberseguridad</p>
-      <p class="text-sm text-muted-foreground mt-1">Universidad del Caribe (UNICARIBE) · 2026 – actualidad</p>
+  <div class="mb-10">
+    <div class="flex items-center gap-3 mb-5">
+      <GraduationCap className="size-5 text-primary" />
+      <h3 class="text-xl font-semibold">{copy.educationTitle}</h3>
     </div>
-    <div class="border border-border rounded-xl p-5 hover:border-primary/40 transition-colors bg-card">
-      <p class="font-semibold text-foreground">Bachiller técnico en Desarrollo de Aplicaciones</p>
-      <p class="text-sm text-muted-foreground mt-1">Politécnico Parroquial Betania · 2022 – 2025</p>
-    </div>
-    <div class="border border-border rounded-xl p-5 hover:border-primary/40 transition-colors bg-card">
-      <p class="font-semibold text-foreground">Inglés, Intermedio - Alto</p>
-      <p class="text-sm text-muted-foreground mt-1">Universidad O&M · 2022 - En curso</p>
+    <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-4">
+      {copy.education.map((item) => <div class="border border-border rounded-xl p-5 bg-card">
+        <p class="font-semibold">{item.title}</p><p class="text-sm text-muted-foreground mt-1">{item.detail}</p>
+      </div>)}
     </div>
   </div>
-</div>
-
-{/* Experiencia */}
-<div class="mb-10">
-  <div class="flex items-center gap-3 mb-5">
-    <div class="p-2 rounded-lg bg-primary/10"><Briefcase className="size-5 text-primary" client:load /></div>
-    <h3 class="text-xl font-semibold">Experiencia laboral</h3>
-  </div>
-
-  <div class="space-y-4">
-    <div class="border border-border rounded-xl p-5 hover:border-primary/40 transition-colors bg-card space-y-3">
-      <p class="font-semibold text-foreground text-lg">Práctica de verano – FUNDAPEC</p>
-      <p class="text-sm text-muted-foreground font-medium">2022 – 2024</p>
-      <p class="text-sm text-muted-foreground leading-relaxed">
-        Participación en diferentes áreas de la institución, incluyendo Tecnologías de la Información, archivo y servicios generales. Apoyo en la organización de documentos, actualización de información en sistemas, asistencia administrativa y soporte en tareas tecnológicas básicas.
-      </p>
+  <div class="mb-10">
+    <div class="flex items-center gap-3 mb-5">
+      <Briefcase className="size-5 text-primary" /><h3 class="text-xl font-semibold">{copy.experienceTitle}</h3>
     </div>
-
-    <div class="border border-border rounded-xl p-5 hover:border-primary/40 transition-colors bg-card space-y-3">
-      <p class="font-semibold text-foreground text-lg">Community Manager y soporte web – AJDent</p>
-      <p class="text-sm text-muted-foreground font-medium">2026 – actualidad</p>
-      <p class="text-sm text-muted-foreground leading-relaxed">
-        Gestión de redes sociales y apoyo en la presencia digital de la clínica. Manejo de la comunicación con clientes, publicación de contenido y soporte en la información del sitio web para mejorar la visibilidad del negocio.
-      </p>
-    </div>
-
-    <div class="border border-border rounded-xl p-5 hover:border-primary/40 transition-colors bg-card space-y-3">
-      <p class="font-semibold text-foreground text-lg">Pasantía – Soporte administrativo y servicios generales</p>
-      <p class="text-sm text-muted-foreground font-medium">2024 – 2025</p>
-      <p class="text-sm text-muted-foreground leading-relaxed">
-        Apoyo en tareas administrativas como la organización y traslado de documentos, grabación de discos, actualización de información en el sistema institucional y asistencia en procesos internos.
-      </p>
-    </div>
-
-    <div class="border border-border rounded-xl p-5 hover:border-primary/40 transition-colors bg-card space-y-3">
-      <p class="font-semibold text-foreground text-lg">EDP.web – Proyecto empresarial</p>
-      <p class="text-sm text-muted-foreground font-medium">2025 – actualidad</p>
-      <p class="text-sm text-muted-foreground leading-relaxed">
-        Fundación y gestión de una agencia de diseño web enfocada en pequeñas y medianas empresas. Desarrollo de sitios web modernos, gestión de clientes y ejecución de estrategias digitales.
-      </p>
+    <div class="space-y-4">
+      {copy.experience.map((item) => <div class="border border-border rounded-xl p-5 bg-card space-y-3">
+        <p class="font-semibold text-lg">{item.title}</p><p class="text-sm text-muted-foreground font-medium">{item.dates}</p>
+        <p class="text-sm text-muted-foreground leading-relaxed">{item.description}</p>
+      </div>)}
     </div>
   </div>
-</div>
-
-{/* Habilidades técnicas */}
-<div class="mb-10">
-  <div class="flex items-center gap-3 mb-5">
-    <div class="p-2 rounded-lg bg-primary/10"><Wrench className="size-5 text-primary" client:load /></div>
-    <h3 class="text-xl font-semibold">Habilidades técnicas</h3>
+  <div class="mb-10">
+    <div class="flex items-center gap-3 mb-5">
+      <Wrench className="size-5 text-primary" /><h3 class="text-xl font-semibold">{copy.technicalTitle}</h3>
+    </div>
+    <div class="grid md:grid-cols-2 gap-4">
+      {skills.map((skill) => <SkillCard title={skill.title} description={skill.description} iconName={skill.iconName} technologies={skill.technologies} />)}
+    </div>
   </div>
-  <div class="grid md:grid-cols-2 lg:grid-cols-3 gap-4">
-    {
-      skills.map((skill) => (
-        <SkillCard
-          title={skill.title}
-          description={skill.description}
-          iconName={skill.iconName}
-          technologies={skill.technologies}
-        />
-      ))
-    }
+  <div class="mb-10">
+    <h3 class="text-xl font-semibold mb-5">{copy.languagesTitle}</h3>
+    <div class="border border-border rounded-xl p-5 bg-card">
+      <p class="font-semibold">{copy.language.title}</p>
+      <p class="text-sm text-muted-foreground mt-1">{copy.language.detail}</p>
+      <p class="text-sm text-muted-foreground mt-3">{copy.language.description}</p>
+    </div>
   </div>
-</div>
-
-{/* Habilidades profesionales */}
-<div>
-  <div class="flex items-center gap-3 mb-5">
-    <div class="p-2 rounded-lg bg-primary/10"><Users className="size-5 text-primary" client:load /></div>
-    <h3 class="text-xl font-semibold">Habilidades profesionales</h3>
+  <div>
+    <div class="flex items-center gap-3 mb-5">
+      <Users className="size-5 text-primary" /><h3 class="text-xl font-semibold">{copy.professionalTitle}</h3>
+    </div>
+    <p class="text-muted-foreground leading-relaxed mb-5">{copy.professional}</p>
+    <div class="grid grid-cols-2 md:grid-cols-4 gap-3">
+      {copy.soft.map((soft) => <div class="border border-border rounded-lg px-4 py-3 text-sm text-center font-medium">{soft}</div>)}
+    </div>
   </div>
-  <div class="grid grid-cols-2 md:grid-cols-4 gap-3">
-    {['Liderazgo', 'Comunicación', 'Trabajo en equipo', 'Resolución de problemas', 'Adaptabilidad', 'Organización', 'Pensamiento crítico', 'Proactividad'].map((soft) => (
-      <div class="border border-border rounded-lg px-4 py-3 text-sm text-center font-medium hover:border-primary/40 hover:text-primary transition-colors">
-        {soft}
-      </div>
-    ))}
-  </div>
-</div>
+</section>

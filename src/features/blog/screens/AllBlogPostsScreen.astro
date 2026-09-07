@@ -35,7 +35,6 @@ function transformPostForClientFilter(
     tags: post.data.tags,
     body: post.body ?? '',
     pubDate: post.data.pubDate,
-    // heroImage and readingTimeMinutes are optional in PostDataForFilter
   };
 }
 const componentTexts = {
@@ -55,14 +54,14 @@ const pageDescription = t('pageDescription');
 <BaseLayout {pageTitle} {pageDescription}>
   <div class="container mx-auto px-4 py-8 md:py-12">
     <div class="mb-6">
-      <a href="/" class="inline-flex items-center text-sm font-medium text-muted-foreground hover:text-primary transition-colors">
+      <a href={lang === "en" ? "/en/" : "/"} class="inline-flex items-center text-sm font-medium text-muted-foreground hover:text-primary transition-colors">
         <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="mr-2"><path d="m15 18-6-6 6-6"/></svg>
-        Volver al inicio
+        {lang === 'es' ? 'Volver al inicio' : 'Back to home'}
       </a>
     </div>
     <Heading title={t('title')} description={t('description')} />
     <p class="text-xs text-muted-foreground mt-2 mb-4">
-  Ordenado de más reciente a más antiguo.
+  {lang === 'es' ? 'Ordenado de más reciente a más antiguo.' : 'Sorted from newest to oldest.'}
 </p>
     <FilteredPostsList
       client:load
@@ -74,31 +73,39 @@ const pageDescription = t('pageDescription');
     />
 
     {/* Container for posts and "no posts found" message */}
-    <div
-      id="blog-posts-container"
-      class="grid md:grid-cols-2 lg:grid-cols-3 gap-8 mt-8"
-    >
-      {
-        posts.length > 0 ? (
-          posts.map((postEntry) => (
+    {
+      posts.length > 0 ? (
+        <div
+          id="blog-posts-container"
+          class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8 mt-8"
+        >
+          {posts.map((postEntry) => (
             <div class="blog-post-card-wrapper" data-post-id={postEntry.id}>
               <BlogPostCard post={postEntry} lang={lang} />
             </div>
-          ))
-        ) : (
+          ))}
+        </div>
+      ) : (
+        <div class="mt-8">
           <EmptyState
             title={texts('noPostsFound')}
             id="no-posts-initial-message"
-            className="hidden"
           />
-        )
-      }
-    </div>
-    <EmptyState
-      title={texts('noPostsFound')}
-      id="no-posts-filtered-message"
-      className="hidden"
-    />
+        </div>
+      )
+    }
+
+    {
+      posts.length > 0 && (
+        <div
+          id="no-posts-filtered-message"
+          style="display: none;"
+          class="hidden mt-8"
+        >
+          <EmptyState title={texts('noPostsFound')} />
+        </div>
+      )
+    }
 
     <script>
       import {
@@ -106,83 +113,69 @@ const pageDescription = t('pageDescription');
         filtersInitializedAtom,
       } from '../../../stores/blogFilterStore';
 
-      const postsContainer = document.getElementById('blog-posts-container');
-      const noPostsInitialMessage = document.getElementById(
-        'no-posts-initial-message'
-      );
-      const noPostsFilteredMessage = document.getElementById(
-        'no-posts-filtered-message'
-      );
-      const allPostCardWrappers = document.querySelectorAll(
-        '.blog-post-card-wrapper'
-      );
+      function initBlogFiltering() {
+        const postsContainer = document.getElementById('blog-posts-container');
+        const noPostsFilteredMessage = document.getElementById(
+          'no-posts-filtered-message'
+        );
+        const allPostCardWrappers = document.querySelectorAll(
+          '.blog-post-card-wrapper'
+        );
 
-      function updateVisiblePosts() {
         if (!postsContainer || !noPostsFilteredMessage) return;
 
-        const currentFilteredIds = filteredPostIdsAtom.get();
-        const isFiltersInitialized = filtersInitializedAtom.get();
-        let visibleCount = 0;
+        function updateVisiblePosts() {
+          if (!postsContainer || !noPostsFilteredMessage) return;
 
-        allPostCardWrappers.forEach((wrapper) => {
-          const postIdAttribute = wrapper.getAttribute('data-post-id');
-          if (postIdAttribute !== null) {
-            // Now postIdAttribute is definitely a string
-            if (currentFilteredIds.includes(postIdAttribute)) {
+          const currentFilteredIds = filteredPostIdsAtom.get();
+          const isFiltersInitialized = filtersInitializedAtom.get();
+
+          if (!isFiltersInitialized) {
+            postsContainer.style.display = 'grid';
+            noPostsFilteredMessage.style.display = 'none';
+            noPostsFilteredMessage.classList.add('hidden');
+            return;
+          }
+
+          let visibleCount = 0;
+          allPostCardWrappers.forEach((wrapper) => {
+            const postIdAttribute = wrapper.getAttribute('data-post-id');
+            if (postIdAttribute && currentFilteredIds.includes(postIdAttribute)) {
               wrapper.classList.remove('hidden');
               visibleCount++;
             } else {
               wrapper.classList.add('hidden');
             }
-          } else {
-            // If postIdAttribute is null (e.g., element doesn't have the attribute), ensure it's hidden.
-            wrapper.classList.add('hidden');
-          }
-        });
+          });
 
-        if (noPostsInitialMessage) {
-          noPostsInitialMessage.classList.add('hidden'); // Hide initial message when posts are filtered
-        }
-
-        if (isFiltersInitialized) {
           if (visibleCount === 0) {
             postsContainer.style.display = 'none';
+            noPostsFilteredMessage.style.display = 'block';
             noPostsFilteredMessage.classList.remove('hidden');
           } else {
             postsContainer.style.display = 'grid';
+            noPostsFilteredMessage.style.display = 'none';
             noPostsFilteredMessage.classList.add('hidden');
           }
         }
-      }
 
-      // Listen for changes to the filtered post IDs
-      const unsubscribePostIds =
+        // Subscribe to changes
         filteredPostIdsAtom.subscribe(updateVisiblePosts);
+        filtersInitializedAtom.subscribe((isInit) => {
+          if (isInit) updateVisiblePosts();
+        });
 
-      // Listen for initialization to perform the first update
-      const unsubscribeInitialized = filtersInitializedAtom.subscribe(
-        (isInitialized: boolean) => {
-          if (isInitialized) {
-            updateVisiblePosts();
-            // We can unsubscribe from filtersInitializedAtom after the first initialization if we don't expect it to change again
-            // unsubscribeInitialized();
-          }
+        if (filtersInitializedAtom.get()) {
+          updateVisiblePosts();
+        } else {
+          postsContainer.style.display = 'grid';
+          noPostsFilteredMessage.style.display = 'none';
+          noPostsFilteredMessage.classList.add('hidden');
         }
-      );
-
-      // Clean up subscriptions when the component is destroyed (navigation)
-      // Astro doesn't automatically handle this for scripts like frameworks UI do for components.
-      // For a simple app, it's not critical, but it's a good practice.
-      // window.addEventListener('astro:page-load', () => { /* re-attach if necessary */ });
-      // window.addEventListener('astro:before-preparation', () => {
-      //   unsubscribePostIds();
-      //   unsubscribeInitialized();
-      // });
-
-      // Run once at initialization in case the store is already initialized (e.g., if the script loads after the React component)
-      if (filtersInitializedAtom.get()) {
-        updateVisiblePosts();
       }
+
+      document.addEventListener('astro:page-load', initBlogFiltering);
+      initBlogFiltering();
     </script>
   </div>
 </BaseLayout>

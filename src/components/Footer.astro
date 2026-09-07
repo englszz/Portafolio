@@ -1,10 +1,11 @@
 ---
+import { getLocale } from '@/i18n/routing';
 import { defaultLanguage, useTranslations, type LanguageCode } from '@/i18n/ui';
 import { getRelativeLocaleUrl } from 'astro:i18n';
 import { Github, Linkedin, Mail, FileText, ArrowUpRight } from 'lucide-react';
 
 const lang =
-  (Astro.currentLocale as LanguageCode | undefined) ?? defaultLanguage;
+  (getLocale(Astro.url.pathname) as LanguageCode | undefined) ?? defaultLanguage;
 const tSite = useTranslations(lang, 'site');
 const tNav = useTranslations(lang, 'nav');
 ---
@@ -17,20 +18,20 @@ const tNav = useTranslations(lang, 'nav');
       <div>
         <p class="text-lg font-bold mb-2">Engels Damirón</p>
         <p class="text-sm text-muted-foreground mb-4 max-w-xs">
-          Técnico en soporte IT, desarrollador web y futuro ingeniero en ciberseguridad desde República Dominicana.
+          {lang === 'es' ? 'Desarrollador web y técnico IT desde República Dominicana. Estudiante de Ingeniería en Ciberseguridad.' : 'Web developer and IT technician from the Dominican Republic. Cybersecurity Engineering student.'}
         </p>
         <a
           href="mailto:engelsdamiron9@gmail.com"
           class="inline-flex items-center gap-2 text-sm text-muted-foreground hover:text-primary transition-colors"
         >
-          <Mail class="size-4" />
+          <Mail className="size-4" />
           engelsdamiron9@gmail.com
         </a>
       </div>
 
       {/* Navigation Column */}
       <div>
-        <p class="text-sm font-semibold uppercase tracking-widest text-muted-foreground mb-4">Navegación</p>
+        <p class="text-sm font-semibold uppercase tracking-widest text-muted-foreground mb-4">{lang === 'es' ? 'Navegación' : 'Navigation'}</p>
         <nav class="flex flex-col gap-2">
           <a href={getRelativeLocaleUrl(lang, '/')} class="text-sm text-muted-foreground hover:text-foreground transition-colors">{tNav('home')}</a>
           <a href={getRelativeLocaleUrl(lang, '/projects')} class="text-sm text-muted-foreground hover:text-foreground transition-colors">{tNav('projects')}</a>
@@ -41,7 +42,7 @@ const tNav = useTranslations(lang, 'nav');
 
       {/* Social Column */}
       <div>
-        <p class="text-sm font-semibold uppercase tracking-widest text-muted-foreground mb-4">Encuéntrame en</p>
+        <p class="text-sm font-semibold uppercase tracking-widest text-muted-foreground mb-4">{lang === 'es' ? 'Encuéntrame en' : 'Find me on'}</p>
         <div class="flex flex-col gap-3">
           <a
             href="https://github.com/englszz"
@@ -49,9 +50,9 @@ const tNav = useTranslations(lang, 'nav');
             rel="noopener noreferrer"
             class="inline-flex items-center gap-2 text-sm text-muted-foreground hover:text-primary transition-colors group"
           >
-            <Github class="size-4" />
+            <Github className="size-4" />
             GitHub
-            <ArrowUpRight class="size-3 opacity-0 group-hover:opacity-100 transition-opacity" />
+            <ArrowUpRight className="size-3 opacity-0 group-hover:opacity-100 transition-opacity" />
           </a>
           <a
             href="https://www.linkedin.com/in/engelsdamiron/?locale=en"
@@ -59,19 +60,19 @@ const tNav = useTranslations(lang, 'nav');
             rel="noopener noreferrer"
             class="inline-flex items-center gap-2 text-sm text-muted-foreground hover:text-primary transition-colors group"
           >
-            <Linkedin class="size-4" />
+            <Linkedin className="size-4" />
             LinkedIn
-            <ArrowUpRight class="size-3 opacity-0 group-hover:opacity-100 transition-opacity" />
+            <ArrowUpRight className="size-3 opacity-0 group-hover:opacity-100 transition-opacity" />
           </a>
           <a
-            href="/CV-Engels.pdf"
+            href={lang === 'es' ? '/Engels_Damiron_CV_ES.pdf' : '/Engels_Damiron_CV_EN.pdf'}
             target="_blank"
             rel="noopener noreferrer"
             class="inline-flex items-center gap-2 text-sm text-muted-foreground hover:text-primary transition-colors group"
           >
-            <FileText class="size-4" />
-            Descargar CV
-            <ArrowUpRight class="size-3 opacity-0 group-hover:opacity-100 transition-opacity" />
+            <FileText className="size-4" />
+            {lang === 'es' ? 'Ver CV (PDF)' : 'View CV (PDF)'}
+            <ArrowUpRight className="size-3 opacity-0 group-hover:opacity-100 transition-opacity" />
           </a>
         </div>
       </div>
@@ -79,7 +80,7 @@ const tNav = useTranslations(lang, 'nav');
 
     {/* Bottom bar */}
     <div class="mt-10 pt-6 border-t border-border/40 flex items-center justify-center text-xs text-muted-foreground">
-      <p>© 2026 Engels Damirón. Todos los derechos reservados.</p>
+      <p>© 2026 Engels Damirón. {lang === 'es' ? 'Todos los derechos reservados.' : 'All rights reserved.'}</p>
     </div>
   </div>
 </footer>

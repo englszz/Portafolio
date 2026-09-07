@@ -14,6 +14,7 @@ interface LightboxImage {
 }
 
 interface ImageLightboxProps {
+  lang?: "es" | "en";
   images: LightboxImage[];
   initialIndex?: number;
   open: boolean;
@@ -22,6 +23,7 @@ interface ImageLightboxProps {
 
 export default function ImageLightbox({
   images,
+  lang = "es",
   initialIndex = 0,
   open,
   onOpenChange,
@@ -60,12 +62,13 @@ export default function ImageLightbox({
   return (
     <Dialog open={open} onOpenChange={onOpenChange}>
       <DialogContent
+        closeLabel={lang === "es" ? "Cerrar" : "Close"}
         className="!max-w-[92vw] !w-auto !max-h-[92vh] !p-0 !bg-black/95 !border-white/10 !rounded-2xl overflow-hidden !gap-0"
       >
         {/* Accessible but visually hidden title */}
-        <DialogTitle className="sr-only">{current?.alt || 'Image preview'}</DialogTitle>
+        <DialogTitle className="sr-only">{current?.alt || (lang === "es" ? "Vista previa de imagen" : "Image preview")}</DialogTitle>
         <DialogDescription className="sr-only">
-          {current?.caption || 'Full size image preview'}
+          {current?.caption || (lang === "es" ? "Imagen a tamaño completo" : "Full size image preview")}
         </DialogDescription>
 
         <div className="relative flex items-center justify-center min-h-[50vh] max-h-[85vh]">
@@ -75,14 +78,14 @@ export default function ImageLightbox({
               <button
                 onClick={goPrev}
                 className="absolute left-3 top-1/2 -translate-y-1/2 z-10 flex items-center justify-center w-10 h-10 rounded-full bg-white/10 backdrop-blur-sm border border-white/20 text-white/80 hover:bg-white/20 hover:text-white transition-all duration-200 hover:scale-110"
-                aria-label="Previous image"
+                aria-label={lang === "es" ? "Imagen anterior" : "Previous image"}
               >
                 <ChevronLeft className="w-5 h-5" />
               </button>
               <button
                 onClick={goNext}
                 className="absolute right-3 top-1/2 -translate-y-1/2 z-10 flex items-center justify-center w-10 h-10 rounded-full bg-white/10 backdrop-blur-sm border border-white/20 text-white/80 hover:bg-white/20 hover:text-white transition-all duration-200 hover:scale-110"
-                aria-label="Next image"
+                aria-label={lang === "es" ? "Imagen siguiente" : "Next image"}
               >
                 <ChevronRight className="w-5 h-5" />
               </button>

@@ -1,5 +1,7 @@
 ---
+import { getLocale } from '@/i18n/routing';
 import '../styles/global.css';
+import shareImage from '@/assets/fotos/DamirónPFP.png';
 import { defaultLanguage, useTranslations, type LanguageCode } from '@/i18n/ui';
 import Footer from '@/components/Footer.astro';
 import Header from '@/components/Header.astro';
@@ -16,6 +18,7 @@ import { Toaster } from 'sonner';
 type Props = {
   pageTitle: string;
   pageDescription?: string;
+  pageImage?: string;
 };
 
 export type NavItem = {
@@ -24,10 +27,17 @@ export type NavItem = {
   icon: any;
 };
 
-const { pageTitle, pageDescription } = Astro.props;
+const { pageTitle, pageDescription, pageImage } = Astro.props;
 const lang =
-  (Astro.currentLocale as LanguageCode | undefined) ?? defaultLanguage;
+  (getLocale(Astro.url.pathname) as LanguageCode | undefined) ?? defaultLanguage;
 const currentPathname = Astro.url.pathname;
+const site = Astro.site ?? new URL('https://engelsdamiron.me');
+const is404 = /\/404(?:\.html)?\/?$/.test(currentPathname);
+const canonical = new URL(is404 && lang === "es" ? "/404.html" : currentPathname, site);
+const basePath = currentPathname.replace(/^\/en(?=\/|$)/, '') || '/';
+const spanishUrl = new URL(is404 ? "/404.html" : basePath, site);
+const englishUrl = new URL(is404 ? '/en/404/' : '/en' + (basePath === '/' ? '/' : basePath), site);
+const socialImage = new URL(pageImage ?? shareImage.src, site);
 
 const tSite = useTranslations(lang, 'site');
 const tNav = useTranslations(lang, 'nav');
@@ -57,11 +67,28 @@ const languagesForSelector: Array<LanguageSelectorItem> =
     <link rel="icon" type="image/png" href="/favicons/light-mode/ed1.png" sizes="96x96" media="(prefers-color-scheme: light)" />
     <link rel="icon" type="image/png" href="/favicons/dark-mode/ed.png" sizes="96x96" />
     <link rel="apple-touch-icon" sizes="180x180" href="/favicons/dark-mode/ed.png" />
-    <link rel="manifest" href="/favicons/dark-mode/ed.png" />
+    <link rel="manifest" href="/favicons/dark-mode/site.webmanifest" />
+    <link rel="canonical" href={canonical} />
+    <link rel="alternate" hreflang="es" href={spanishUrl} />
+    <link rel="alternate" hreflang="en" href={englishUrl} />
+    <link rel="alternate" hreflang="x-default" href={spanishUrl} />
+    <meta property="og:type" content="website" />
+    <meta property="og:site_name" content="Engels Damirón" />
+    <meta property="og:title" content={pageTitle || tSite('title')} />
+    <meta property="og:description" content={pageDescription || tSite('description')} />
+    <meta property="og:url" content={canonical} />
+    <meta property="og:image" content={socialImage} />
+    <meta property="og:locale" content={lang === 'es' ? 'es_DO' : 'en_US'} />
+    <meta property="og:locale:alternate" content={lang === 'es' ? 'en_US' : 'es_DO'} />
+    <meta name="twitter:card" content="summary_large_image" />
+    <meta name="twitter:title" content={pageTitle || tSite('title')} />
+    <meta name="twitter:description" content={pageDescription || tSite('description')} />
+    <meta name="twitter:image" content={socialImage} />
 
     <script is:inline>
       (function() {
-        var theme = localStorage.getItem('theme');
+        var theme;
+        try { theme = localStorage.getItem('theme'); } catch {}
         if (theme === 'dark' || (!theme && window.matchMedia('(prefers-color-scheme: dark)').matches)) {
           document.documentElement.classList.add('dark');
         } else {
@@ -81,7 +108,7 @@ const languagesForSelector: Array<LanguageSelectorItem> =
     <ClientRouter />
   </head>
   <body class="h-[100dvh] bg-background font-sans antialiased flex flex-col">
-    {/* Tailwind classes for the body */}
+    <a href="#main-content" class="sr-only focus:not-sr-only focus:fixed focus:top-2 focus:left-2 focus:z-[100] focus:bg-background focus:p-3">{lang === 'es' ? 'Saltar al contenido' : 'Skip to content'}</a>
     <header class="hidden md:block">
       <!-- passer aussi navItems mais sans le premier element dont le href === '/' -->
       <Header
@@ -89,7 +116,7 @@ const languagesForSelector: Array<LanguageSelectorItem> =
       />
     </header>
 
-    <main
+    <main id="main-content"
       class="container mx-auto px-4 py-8 flex-1 max-w-screen-2xl pb-20 md:pb-8"
     >
       <slot />

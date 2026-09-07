@@ -3,7 +3,6 @@ import { defineConfig } from 'astro/config';
 import react from '@astrojs/react';
 import mdx from '@astrojs/mdx';
 import tailwindcss from '@tailwindcss/vite';
-import { remarkReadingTime } from './src/lib/remark-reading-time.mjs';
 import rehypeMermaid from 'rehype-mermaid';
 import vercel from '@astrojs/vercel';
 
@@ -17,7 +16,7 @@ const mermaidStrategy = isProduction || isVercel ? 'pre-mermaid' : 'inline-svg';
 console.log(`Using Mermaid strategy: ${mermaidStrategy}`);
 
 export default defineConfig({
-  site: 'https://engels-damiron.vercel.app',
+  site: 'https://engelsdamiron.me',
 
   // ⭐ AÑADIDO: ALIAS PARA QUE FUNCIONE "@/assets"
   vite: {
@@ -48,7 +47,7 @@ export default defineConfig({
   ],
 
   i18n: {
-    locales: ['es'],
+    locales: ['es', 'en'],
     defaultLocale: 'es',
     routing: {
       prefixDefaultLocale: false,

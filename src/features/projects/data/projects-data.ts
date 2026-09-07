@@ -1,5 +1,10 @@
 import type { ProjectData } from '../type';
 
+import dingMainImage from '@/assets/proyectos/DINGmain.png';
+import dingExtra1 from '@/assets/proyectos/DING1.png';
+import dingExtra2 from '@/assets/proyectos/DING2.png';
+import dingExtra3 from '@/assets/proyectos/DING3.png';
+
 import edpCalendarImage from '@/assets/proyectos/EDPcalendarMain.png';
 import edpExtra1 from '@/assets/proyectos/EDPCalendar.png';
 import edpExtra2 from '@/assets/proyectos/EDPCalendar2.png';
@@ -15,6 +20,30 @@ import edpagency from '@/assets/proyectos/edpagency.png';
 import edplol from '@/assets/proyectos/edpblacki.png';
 
 export const projectsListUnsorted: Array<ProjectData> = [
+  {
+    id: 'DING',
+    slug: 'ding',
+    imageUrl: dingMainImage,
+    projectUrl: 'https://ding-pearl.vercel.app/',
+    tags: ['Música', 'Diario', 'Social'],
+    Categoria: 'Aplicación Web',
+    date: '2026-09-01',
+    galleryImages: [],
+    keyFeatures: [
+      { id: 'Sistema de calificación granular' },
+      { id: 'Reseñas múltiples por álbum' },
+      { id: 'Integración con APIs externas abiertas' },
+      { id: 'Perfiles públicos con función social' },
+    ],
+    technologiesUsed: [
+      { id: 'react', name: 'Next.js' },
+      { id: 'typescript', name: 'TypeScript' },
+      { id: 'postgresql', name: 'Supabase' },
+    ],
+    extraImage1: dingExtra1,
+    extraImage2: dingExtra2,
+    extraImage3: dingExtra3,
+  },
   {
     id: 'EDP Calendar',
     slug: 'edp-calendar',
@@ -43,7 +72,7 @@ export const projectsListUnsorted: Array<ProjectData> = [
     slug: 'aj-dent',
     imageUrl: ajDentMainImage,
     projectUrl: 'https://aj-dent.vercel.app/',
-    tags: ['Clínica', 'Odontólogia', 'AJ Dent'],
+    tags: ['Clínica', 'Odontología', 'AJ Dent'],
     Categoria: 'Clínica Dental',
     date: '2026-04-12',
     galleryImages: [],
@@ -68,7 +97,7 @@ export const projectsListUnsorted: Array<ProjectData> = [
     projectUrl: 'https://edpweb.vercel.app/',
     tags: ['Web', 'Agencia', 'EDP.web'],
     Categoria: 'Agencia de Páginas Web',
-    date: '2026-01-06',
+    date: '2025-12',
     galleryImages: [],
     keyFeatures: [
       { id: 'Aspectos de Marca' },

@@ -2,11 +2,12 @@ import { useState } from 'react';
 import ImageLightbox from './ImageLightbox';
 
 interface HeroImageProps {
+  lang?: "es" | "en";
   src: string;
   alt: string;
 }
 
-export default function ProjectHeroImage({ src, alt }: HeroImageProps) {
+export default function ProjectHeroImage({ src, alt, lang = "es" }: HeroImageProps) {
   const [lightboxOpen, setLightboxOpen] = useState(false);
 
   return (
@@ -25,12 +26,13 @@ export default function ProjectHeroImage({ src, alt }: HeroImageProps) {
         {/* Hover overlay */}
         <div className="absolute inset-0 bg-gradient-to-t from-black/30 via-transparent to-transparent opacity-0 group-hover:opacity-100 transition-opacity duration-300 flex items-end justify-center pb-5">
           <span className="text-white/90 text-sm font-medium bg-white/10 backdrop-blur-sm px-4 py-1.5 rounded-full border border-white/20">
-            Click para ampliar
+            {lang === "es" ? "Haz clic para ampliar" : "Click to enlarge"}
           </span>
         </div>
       </div>
 
       <ImageLightbox
+        lang={lang}
         images={[{ src, alt }]}
         initialIndex={0}
         open={lightboxOpen}

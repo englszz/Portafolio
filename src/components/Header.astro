@@ -1,15 +1,17 @@
 ---
+import { getLocale } from '@/i18n/routing';
 import { defaultLanguage, type LanguageCode } from '@/i18n/ui';
 import type { NavItem } from '@/layouts/BaseLayout.astro';
 // âŒ ELIMINAMOS ESTAS IMPORTACIONES, ya no se usan al quitar el selector de idioma:
 // import { type LanguageSelectorItem } from '@/lib/i18n-utils';
 // import { LanguageSelector } from './LanguageSelector.tsx';
 import { getRelativeLocaleUrl } from 'astro:i18n';
+import LocaleSelector from './LocaleSelector.astro';
 import ThemeToggle from './ThemeToggle.astro';
 
 // ðŸš€ IMPORTAMOS LO NECESARIO PARA LA IMAGEN
 import { Image } from 'astro:assets';
-import EdLogo from '@/assets/fotos/ed.png'; 
+import EdLogo from '@/assets/fotos/ed.png';
 
 interface Props {
    // âŒ ELIMINAMOS ESTA PROPIEDAD:
@@ -20,7 +22,7 @@ interface Props {
 const { navItems } = Astro.props as Props;
 
 const currentLocale =
-   (Astro.currentLocale as LanguageCode | undefined) ?? defaultLanguage;
+   (getLocale(Astro.url.pathname) as LanguageCode | undefined) ?? defaultLanguage;
 ---
 
 <header
@@ -29,15 +31,16 @@ const currentLocale =
    <nav class="mx-auto px-4 max-w-screen-2xl flex justify-between items-center">
       {/* âœ… CORRECCIÃ“N CLAVE: El logo ahora usa getRelativeLocaleUrl para apuntar siempre
          a la raÃz (/) con el prefijo de idioma 'en'. */}
-      <a 
-         href={getRelativeLocaleUrl(currentLocale, '/')} 
+      <a
+         href={getRelativeLocaleUrl(currentLocale, '/')}
          class="flex items-center space-x-2 text-2xl font-bold"
       >
-            <Image  
-                  src={EdLogo}  
-                  alt="Logo de Engels DamirÃ³n"  
-                  width={40}    
-                  height={40}  
+            <Image
+                  src={EdLogo}
+                  class="brightness-0 dark:brightness-100"
+                  alt="Engels Damirón"
+                  width={40}
+                  height={40}
             />
       </a>
       <div class="flex items-center gap-x-5">
@@ -54,6 +57,7 @@ const currentLocale =
          }
       </div>
       <div class="flex items-center gap-x-3">
+         <LocaleSelector />
          <ThemeToggle />
       </div>
    </nav>

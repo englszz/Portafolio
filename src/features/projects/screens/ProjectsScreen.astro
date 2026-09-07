@@ -18,9 +18,9 @@ const projectsPageTranslations = t.projectsPage; // For easier access
 
 <div class="py-12 md:py-16">
   <div class="mb-6">
-    <a href="/" class="inline-flex items-center text-sm font-medium text-muted-foreground hover:text-primary transition-colors">
+    <a href={lang === "en" ? "/en/" : "/"} class="inline-flex items-center text-sm font-medium text-muted-foreground hover:text-primary transition-colors">
       <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="mr-2"><path d="m15 18-6-6 6-6"/></svg>
-      Volver al inicio
+      {lang === 'es' ? 'Volver al inicio' : 'Back to home'}
     </a>
   </div>
   <Heading title={projectsPageTranslations?.title ?? 'Projects'} />
@@ -32,7 +32,7 @@ const projectsPageTranslations = t.projectsPage; // For easier access
           return (
             <a
               href={projectUrl}
-              aria-label={`Ver proyecto ${project.title}`}
+              aria-label={`${lang === "es" ? "Ver proyecto" : "View project"} ${project.title}`}
               class="flex rounded-lg transition-shadow duration-200 hover:shadow-xl focus:outline-none focus:ring-2 focus:ring-ring focus:ring-offset-2"
             >
               <SectionCard

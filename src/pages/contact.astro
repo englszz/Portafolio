@@ -1,13 +1,14 @@
 ---
+import { getLocale } from '@/i18n/routing';
 import { ContactScreen } from '@/features/contact';
 import { defaultLanguage, useTranslations, type LanguageCode } from '@/i18n/ui';
-import BaseLayout from '../layouts/BaseLayout.astro';
+import BaseLayout from '@/layouts/BaseLayout.astro';
 
-const lang = defaultLanguage as LanguageCode;
+const lang = (getLocale(Astro.url.pathname) ?? defaultLanguage) as LanguageCode;
 const t = useTranslations(lang, 'contactPage');
 
 const pageMeta = {
-  title: t('pageTitle'),
+  title: t('title'),
   description: t('pageDescription'),
 };
 
@@ -35,13 +36,9 @@ const layoutProps = {
   formTitle: t('formTitle'),
   formTranslations,
   orSeparatorText: t('orSeparatorText'),
-  calendarTitle: t('calendarTitle'),
-  calendarDescription: t('calendarDescription'),
-  calendarLinkLabel: t('calendarLinkLabel'),
-  calendarUrl: import.meta.env.PUBLIC_GOOGLE_CALENDAR_URL as string,
 };
 ---
 
-<BaseLayout pageTitle={pageMeta.title} pageDescription={pageMeta.description}>
+<BaseLayout pageTitle={t('pageTitle')} pageDescription={pageMeta.description}>
   <ContactScreen {...layoutProps} />
 </BaseLayout>

@@ -8,7 +8,7 @@ import {
 import { ui, defaultLanguage, type LanguageCode } from '@/i18n/ui';
 
 export async function getStaticPaths() {
-  const lang = Astro.currentLocale as LanguageCode;
+  const lang = defaultLanguage;
   const paths = [];
 
   const projects = getTranslatedProjects(lang);
@@ -20,7 +20,7 @@ export async function getStaticPaths() {
   }
   return paths;
 }
-const lang = Astro.currentLocale as LanguageCode;
+const lang = defaultLanguage;
 const { project } = Astro.props as { project: TranslatedProject };
 
 const t = ui[lang];
@@ -34,6 +34,6 @@ const pageTitle = `${project.title} | ${t.site.title}`;
 const pageDescription = project.detailedDescription ?? project.description;
 ---
 
-<BaseLayout pageTitle={pageTitle} pageDescription={pageDescription}>
+<BaseLayout pageTitle={pageTitle} pageDescription={pageDescription} pageImage={project.imageUrl?.src}>
   <ProjectScreen project={project} t={t} lang={lang} />
 </BaseLayout>

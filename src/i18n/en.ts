@@ -1,0 +1,71 @@
+export const en = {
+  projectsContent: {
+    DING: {
+      title: 'DING', description: 'A personal music diary with ratings, reviews and social features.', imageAltText: 'DING project screenshot', categoryText: 'Web Application', dateText: 'September 1, 2026',
+      detailedDescription: 'A personal music diary where users log their listening history, rate albums and individual songs (track by track, on a 0.0–10.0 scale), and discover music through friends’ profiles. Built with Next.js and Supabase, with metadata search through MusicBrainz and high-quality artwork from Cover Art Archive. It includes a social layer: users can comment on each other’s reviews, turning the diary into a shared space for music discovery, beyond a private listening log.',
+      keyFeatures: {
+        'Sistema de calificación granular': { title: 'Granular rating system', description: 'Rate a whole album or individual tracks on a 0.0–10.0 scale.' },
+        'Reseñas múltiples por álbum': { title: 'Multiple reviews per album', description: 'Record repeat listens over time.' },
+        'Integración con APIs externas abiertas': { title: 'Integration with open external APIs', description: 'MusicBrainz and Cover Art Archive provide metadata and high-quality artwork.' },
+        'Perfiles públicos con función social': { title: 'Public profiles with social features', description: 'Users can comment on each other’s reviews.' },
+      },
+      challenges: 'The biggest challenge was designing a data model that supported ratings at different levels (albums and songs) without duplicating logic or slowing down searches. Working with MusicBrainz also meant handling inconsistent metadata from an open, community-maintained database.',
+      learnings: 'Adding social features — comments between users — meant moving beyond a simple CRUD application to think about permissions, basic moderation and relationships between users through Supabase Row Level Security.',
+    },
+    'EDP Calendar': {
+      title: 'EDP Calendar', description: 'A hybrid calendar for personal organization and freelance projects, with email reminders.', imageAltText: 'EDP Calendar project screenshot', categoryText: 'Project Management', dateText: 'May 8, 2026',
+      detailedDescription: 'EDP Calendar grew out of the need for a single tool that combined personal organization and freelance project management. The idea was simple: avoid relying on three different apps to manage daily tasks, client projects and productivity metrics.',
+      keyFeatures: {
+        'Sistema híbrido personal/negocios': { title: 'Hybrid personal and business system', description: 'Users can switch between their personal life and client projects, each with its own statistics, budgets in DOP and USD, and progress tracking.' },
+        'Sistema de recordatorios por email': { title: 'Email reminders', description: 'Without relying on iOS push notifications, reminders reach users’ inboxes through a server on Render and Resend.' },
+        'Estadísticas reales': { title: 'Progress statistics', description: 'See both what remains and what has been accomplished, with charts by category, priority and weekly activity.' },
+      },
+      challenges: 'The biggest challenge was the notification system. The iOS push notification limitations encountered during development led me to rethink the architecture and use email reminders through an external server. Setting up Firebase Cloud Functions, managing Google Cloud permissions and resolving dependency version conflicts took most of the development time.',
+      learnings: 'The most obvious solution is not always the right one. Starting with push notifications seemed natural, but the iOS limitations led to a more robust, cross-platform solution. I also learned that separating credentials from code from the beginning saves hours of trouble with GitHub and project security.',
+    },
+    'AJ Dent': {
+      title: 'AJ Dent', description: 'A modern, functional landing page for a dental clinic with appointment integration.', imageAltText: 'AJ Dent project screenshot', categoryText: 'Dental Clinic', dateText: 'April 12, 2026',
+      detailedDescription: 'A dental clinic landing page with an admin panel built on Supabase (with Row Level Security), an interactive 3D model and an AI chatbot integrated through WhatsApp for appointments and customer service. I also managed the business’s digital presence and social media.',
+      keyFeatures: {
+        'Sistema funcional': { title: 'Functional system', description: 'Organized management of the clinic’s appointments and services.' },
+        'Integración con WhatsApp': { title: 'WhatsApp integration', description: 'A direct button for quickly scheduling appointments through WhatsApp.' },
+        'Diseño moderno': { title: 'Modern design', description: 'A clean, professional interface that builds patient trust.' },
+      },
+      challenges: 'One of the main challenges was structuring the content clearly without overwhelming users, strategically organizing services, prices and calls to action. Another challenge was creating a design that was visually appealing and encouraged conversions, especially through WhatsApp. I also worked on responsive layouts for a smooth mobile experience and refined details such as typography, spacing and hierarchy.',
+      learnings: 'This project helped me understand that a website should focus on its ability to produce real results as well as its design. I learned to think of the user experience as a complete journey, guiding people toward a specific action simply and directly. I also strengthened my skills in interface optimization, conversion-focused decisions and deploying functional projects with good performance.',
+    },
+    'EDP.web': {
+      title: 'EDP.web', description: 'A freelance web development agency for local businesses in Santo Domingo. Closed in August 2026.', imageAltText: 'EDP.web project screenshot', categoryText: 'Web Development Agency', dateText: 'December 2025 – August 2026',
+      detailedDescription: 'A freelance web development agency that I founded and operated for local businesses in Santo Domingo, building modern, functional websites from start to finish. It ran from December 2025 to August 2026.',
+      keyFeatures: {
+        'Aspectos de Marca': { title: 'Brand identity', description: 'A black-and-white color scheme, no unnecessary elements and generous spacing.' },
+        Contacto: { title: 'Contact', description: 'Making it validate email addresses, prevent errors and feel intuitive on both desktop and mobile was a usability challenge.' },
+      },
+      challenges: 'I wanted the logo to automatically switch from black to white when someone changed from light to dark mode. It sounds simple, but making it feel smooth and error-free took several attempts. I eventually got it working as intended, with a seamless transition.',
+      learnings: 'Less is more. Restricting myself to black and white pushed me to be more creative with spacing, text sizes and organization. I learned that a simple, well-executed design works better than one overloaded with effects and colors.',
+    },
+  },
+  skillsContent: {
+    frontendDevelopment: { title: 'Front-End Web Development', description: 'HTML, CSS, JavaScript, TypeScript, Astro and React. Building modern, responsive and accessible interfaces.' },
+    itSupport: { title: 'IT Support and Data Management', description: 'Support with institutional technology tasks, updating records and reviewing data in SQL Server during my internship.' },
+    uiUxDesign: { title: 'UI/UX and Graphic Design', description: 'Figma, visual identity, color palettes and brand design.' },
+    officeTools: { title: 'Office Tools', description: 'Excel, Canva/PowerPoint and Word. Document management, presentations and basic data analysis.' },
+  },
+  site: { title: 'Engels Damirón', description: 'Engels Smith Damirón’s portfolio — web developer and IT technician studying Cybersecurity Engineering.' },
+  nav: { home: 'Home', blog: 'Journey', contact: 'Contact', projects: 'Projects' },
+  footer: { rights: 'All rights reserved.' },
+  homePage: {
+    pageTitle: 'Home | Engels Damirón', pageDescription: 'Engels Smith Damirón’s portfolio — web developer and IT technician with hands-on experience, currently studying Cybersecurity Engineering.',
+    heroGreeting: 'Engels Damirón', heroSubtitlePart1: 'IT Support', heroSubtitlePart2: 'Web Development', heroSubtitlePart3: 'Cybersecurity Student',
+    heroIntroduction: 'Web developer and IT technician with experience on projects for local businesses and in institutional support. I am currently studying Cybersecurity Engineering at UNICARIBE.',
+    heroViewWorkButton: 'View my projects', heroContactButton: 'Contact me', heroImageAlt: 'Portrait of Engels Damirón', featuredProjectsTitle: 'Featured projects', featuredProjectsDescription: 'A selection of my latest web development and design work.', projectCardViewProject: 'View project', projectCardViewCode: 'View code', imageNotAvailable: 'Image unavailable', mySkillsTitle: 'Education and experience', mySkillsDescription: 'My education, work experience and technical and professional skills.',
+  },
+  blogPage: { pageTitle: 'Journey | Engels Damirón', pageDescription: 'Engels Damirón’s achievements, certificates, awards and experiences in technology and Model United Nations.', title: 'My Journey', description: 'Medals, awards, activities, experiences and Model United Nations (MUN).', comingSoon: 'I will be adding my achievements and certificates here soon.', heroImageAlt: 'Article image: ', publishedOn: 'Published on: ', readMore: 'Read more', searchPlaceholder: 'Search...', noTagFound: 'Category not found.', selectTagCommandPlaceholder: 'Search categories...', allTagsLabel: 'All categories', noPostsFound: 'No posts found.' },
+  blogPost: { publishedOn: 'Published on: ', updatedOn: 'Updated on: ', heroImageAlt: 'Article image: ', backToList: 'Back to journey', relatedPostsTitle: 'Keep reading', readMore: 'Read more' },
+  toc: { title: 'Table of contents' },
+  contactPage: { pageTitle: 'Contact | Engels Damirón', pageDescription: 'Interested in my projects? Contact me for more information.', title: 'Contact me', description: 'Interested in my projects? Write to me and I will be happy to reply.', formTitle: 'Name', firstNameLabel: 'First name', lastNameLabel: 'Last name', emailLabel: 'Email', messageLabel: 'Message', sendButtonLabel: 'Send message', firstNamePlaceholder: 'Your first name', lastNamePlaceholder: 'Your last name', emailPlaceholder: 'Your email', messagePlaceholder: 'Leave me a message here...', calendarButtonLabel: 'View my availability', calendarPlaceHolder: 'Google Calendar integration will be available soon...', orSeparatorText: 'Or', toastSuccessMessageSent: 'Message sent successfully!', toastErrorFailedToSend: 'Failed to send the message.', toastErrorUnexpected: 'An unexpected error occurred.', toastErrorDetails: 'Error details:', toastErrorValidationFailed: 'The form contains errors.' },
+  projectDetailPage: { backToProjects: 'Back to projects', categoryLabel: 'Category:', dateLabel: 'Date:', aboutTitle: 'About this project', keyFeaturesTitle: 'Key Features', galleryTitle: 'Gallery', challengesTitle: 'Challenges', learningsTitle: 'What I learned', visitProjectButton: 'View project', viewCodeButton: 'View code' },
+  projectsPage: { title: 'My Projects', metaTitle: 'My Projects | Engels Damirón', metaDescription: 'All projects by Engels Damirón — web development, design and entrepreneurship.', noProjects: 'There are no projects to show right now.', noProjectsDescription: 'I will add more projects soon. Check back later!' },
+  notFoundPage: { pageTitle: 'Page not found', title: 'Oops! Page not found.', message: 'This page does not exist or may have moved. You can return to the home page.', homeLink: 'Back to home' },
+  zodErrors: { invalid_type: 'Invalid type.', invalid_type_received_undefined: 'This field is required.', required_field_custom: 'The {fieldName} field is required.', too_small_string_minimum: 'Must contain at least {minimum} characters.', too_big_string_maximum: 'Must contain no more than {maximum} characters.', invalid_string_email: 'Invalid email address.', invalid_string_url: 'Invalid URL.', invalid_string_uuid: 'Invalid UUID.' },
+};

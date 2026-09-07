@@ -18,10 +18,11 @@ interface GalleryImage {
 }
 
 interface ProjectGalleryProps {
+  lang?: "es" | "en";
   images: GalleryImage[];
 }
 
-export default function ProjectGallery({ images }: ProjectGalleryProps) {
+export default function ProjectGallery({ images, lang = "es" }: ProjectGalleryProps) {
   const [lightboxOpen, setLightboxOpen] = useState(false);
   const [lightboxIndex, setLightboxIndex] = useState(0);
 
@@ -66,6 +67,7 @@ export default function ProjectGallery({ images }: ProjectGalleryProps) {
       </Carousel>
 
       <ImageLightbox
+        lang={lang}
         images={images.map((img) => ({
           src: img.src,
           alt: img.alt,

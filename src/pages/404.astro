@@ -1,4 +1,5 @@
 ---
+import { getLocale } from '@/i18n/routing';
 import BaseLayout from '@/layouts/BaseLayout.astro';
 import { defaultLanguage, useTranslations, type LanguageCode } from '@/i18n/ui';
 import { getRelativeLocaleUrl } from 'astro:i18n';
@@ -10,7 +11,7 @@ import Heading from '@/components/Heading.astro';
 import { ArrowLeft } from 'lucide-react';
 
 const lang =
-  (Astro.currentLocale as LanguageCode | undefined) ?? defaultLanguage;
+  (getLocale(Astro.url.pathname) as LanguageCode | undefined) ?? defaultLanguage;
 const t = useTranslations(lang, 'notFoundPage');
 
 const pageTitle = t('pageTitle');
@@ -22,14 +23,14 @@ const pageDescription = t('message');
     <div class="container mx-auto px-4 max-w-2xl">
       <Image
         src={errorIllustration}
-        alt="Error illustration - Light Mode"
+        alt={lang === "es" ? "Ilustración de error en modo claro" : "Error illustration in light mode"}
         class="w-64 h-auto mx-auto mb-8 block dark:hidden"
         densities={[1, 1.5, 2]}
         quality="mid"
       />
       <Image
         src={errorIllustrationDark}
-        alt="Error illustration - Dark Mode"
+        alt={lang === "es" ? "Ilustración de error en modo oscuro" : "Error illustration in dark mode"}
         class="w-64 h-auto mx-auto mb-8 hidden dark:block"
         densities={[1, 1.5, 2]}
         quality="mid"

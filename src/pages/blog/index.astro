@@ -1,9 +1,10 @@
 ---
+import { getLocale } from '@/i18n/routing';
 import { AllBlogPostsScreen } from '@/features/blog';
 import { defaultLanguage, useTranslations, type LanguageCode } from '@/i18n/ui';
-import { getCollection, render, type CollectionEntry } from 'astro:content';
+import { getCollection, type CollectionEntry } from 'astro:content';
 
-const lang = (Astro.currentLocale ?? defaultLanguage) as LanguageCode;
+const lang = (getLocale(Astro.url.pathname) ?? defaultLanguage) as LanguageCode;
 const t = useTranslations(lang, 'blogPage');
 
 const blogEntries: Array<CollectionEntry<'blog'>> = await getCollection(
@@ -13,20 +14,13 @@ const blogEntries: Array<CollectionEntry<'blog'>> = await getCollection(
   }
 );
 
-const enrichedPosts = await Promise.all(
-  blogEntries.map(async (postEntry: CollectionEntry<'blog'>) => {
-    const { remarkPluginFrontmatter } = await render(postEntry);
-    return {
-      id: postEntry.id,
-      slug: postEntry.id,
-      collection: postEntry.collection,
-      data: {
-        ...postEntry.data,
-        readingTimeMinutes: remarkPluginFrontmatter.readingTimeMinutes,
-      },
-    };
-  })
-);
+const enrichedPosts = blogEntries.map((postEntry) => ({
+  ...postEntry,
+  id: postEntry.id,
+  slug: postEntry.id,
+  collection: postEntry.collection,
+  data: { ...postEntry.data },
+}));
 
 enrichedPosts.sort(
   (a, b) =>

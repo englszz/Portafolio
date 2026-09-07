@@ -1,8 +1,9 @@
 ---
+import { getLocale } from '@/i18n/routing';
 import { defaultLanguage, type LanguageCode } from '@/i18n/ui';
 import { getRelativeLocaleUrl } from 'astro:i18n';
 const currentLocale =
-  (Astro.currentLocale as LanguageCode | undefined) ?? defaultLanguage;
+  (getLocale(Astro.url.pathname) as LanguageCode | undefined) ?? defaultLanguage;
 ---
 
 <a href={getRelativeLocaleUrl(currentLocale)}>

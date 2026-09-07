@@ -1,3 +1,4 @@
+import type { ImageMetadata } from 'astro';
 export type KeyFeature = {
   id: string; // for i18n key
   // icon?: string; // Optional: if you want to associate an icon from lucide-react or similar
@@ -17,6 +18,10 @@ export type GalleryImage = {
 };
 
 export type ProjectData = {
+  Categoria: string;
+  extraImage1?: ImageMetadata;
+  extraImage2?: ImageMetadata;
+  extraImage3?: ImageMetadata;
   id: string; // Keep as is, used for main i18n key and internal reference
   slug: string; // New: for URL generation, e.g., 'my-awesome-project'
   imageUrl?: ImageMetadata; // Main project image, keep as is

@@ -1,7 +1,7 @@
 ---
 import { BlogPostDetailScreen } from '@/features/blog';
 import { defaultLanguage, type LanguageCode } from '@/i18n/ui';
-import { getCollection, getEntries, render } from 'astro:content';
+import { getCollection, getEntries, render, type CollectionEntry } from 'astro:content';
 
 let lang = defaultLanguage as LanguageCode;
 
@@ -10,7 +10,7 @@ export async function getStaticPaths() {
     return data.isDraft !== true && data.lang === defaultLanguage;
   });
   return blogEntries.map((post) => ({
-    params: { slug: post.id },
+    params: { slug: post.data.translationKey },
     props: { post },
   }));
 }
@@ -20,33 +20,15 @@ const baseRelatedPosts = post.data.relatedPosts
   ? await getEntries(post.data.relatedPosts)
   : [];
 
-const enrichedRelatedPostsPromises = baseRelatedPosts.map(
-  async (relatedEntry) => {
-    if (!relatedEntry) return null;
-    const { remarkPluginFrontmatter: relatedFm } = await render(relatedEntry);
-    return {
-      id: relatedEntry.id,
-      slug: relatedEntry.id,
-      collection: relatedEntry.collection,
-      data: {
-        ...relatedEntry.data,
-        readingTimeMinutes: relatedFm.readingTimeMinutes,
-      },
-    };
-  }
+const finalRelatedPosts = baseRelatedPosts.filter(
+  (p): p is CollectionEntry<'blog'> => p !== null
 );
-const finalRelatedPosts = (
-  await Promise.all(enrichedRelatedPostsPromises)
-).filter((p) => p !== null);
 
-const { Content, remarkPluginFrontmatter } = await render(post);
+const { Content } = await render(post);
 ---
 
 <BlogPostDetailScreen
-  post={{
-    ...post.data,
-    readingTimeMinutes: remarkPluginFrontmatter.readingTimeMinutes,
-  }}
+  post={post.data}
   lang={lang}
   relatedPosts={finalRelatedPosts}
   filePath={post.filePath ? post.filePath : ''}

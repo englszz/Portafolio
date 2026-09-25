@@ -37,7 +37,7 @@ after(async () => { await browser?.close(); if (server) await new Promise((resol
 
 test('every page has a matching translation, valid local links and localized metadata', async () => {
   const files = await htmlFiles(root);
-  assert.equal(files.length, 60); // 21 posts, four projects, and five other pages in each language.
+  assert.equal(files.length, 62); // 22 posts, four projects, and five other pages in each language.
   for (const file of files) {
     const pageNodes = nodes(parse(await fs.readFile(file, 'utf8')));
     const english = path.relative(root, file).startsWith('en' + path.sep);
@@ -61,13 +61,13 @@ test('every page has a matching translation, valid local links and localized met
   }
 });
 
-test('all 21 journey posts appear in both languages without the removed duplicate', async () => {
+test('all 22 journey posts appear in both languages without the removed duplicate', async () => {
   for (const prefix of ['', '/en']) {
     const doc = nodes(parse(await fs.readFile(routeFile(prefix + '/blog'), 'utf8')));
-    assert.equal(doc.filter((n) => attr(n, 'class')?.includes('blog-post-card-wrapper')).length, 21);
+    assert.equal(doc.filter((n) => attr(n, 'class')?.includes('blog-post-card-wrapper')).length, 22);
     assert.ok(!doc.some((n) => attr(n, 'href')?.replace(/\/$/, '') === `${prefix}/blog/en/27`));
     await assert.rejects(fs.access(routeFile(prefix + '/blog/en/27')));
-    for (const id of ['26', '28', 'example-post']) assert.ok(doc.some((n) => attr(n, 'href')?.replace(/\/$/, '') === `${prefix}/blog/en/${id}`));
+    for (const id of ['26', '28', 'example-post', 'certificado-bachiller']) assert.ok(doc.some((n) => attr(n, 'href')?.replace(/\/$/, '') === `${prefix}/blog/en/${id}`));
   }
 });
 
